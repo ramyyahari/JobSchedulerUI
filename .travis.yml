@@ -3,7 +3,7 @@ node_js:
   - "stable"
 sudo: required  
 install:
-  - sudo npm install --unsafe-perm 
+  - npm install  
 script:
   - npm test
   - npm run coverage
