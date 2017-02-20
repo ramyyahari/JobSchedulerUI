@@ -2,7 +2,7 @@ import ReactStormpath, { Router, HomeRoute, LoginRoute, AuthenticatedRoute } fro
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Route, browserHistory } from 'react-router';
-import { MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
+import { Toggle, MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
 
 ReactStormpath.init();
 
@@ -12,8 +12,9 @@ ReactDOM.render(
   			 <IndexRoute component={IndexPage} />
   			 <LoginRoute path='/login' component={LoginPage} />
   			 <Route path='/register' component={RegistrationPage} />
+  			 <Route path='/profile' component={ProfilePage} />
   			 <AuthenticatedRoute>
-  			 	<HomeRoute path='/profile' component={ProfilePage} /> 
+  			 	<HomeRoute path='/toggle' component={Toggle} /> 
   			</AuthenticatedRoute>	
   		</HomeRoute>
 	</Router>,
