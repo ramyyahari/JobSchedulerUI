@@ -11,6 +11,7 @@ module.exports = {
     filename: 'app.js',
     publicPath: '/js/'
   },
+  externals: ['axios'],
   module: {
     loaders: [{
     test: /\.js$/,
