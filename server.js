@@ -15,16 +15,17 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
-
+/*
 app.use(stormpath.init(app, {
   web: {
     produces: ['application/json']
   }
 }));
-
+*/
 app.get('/exec', function (req,res) {
   console.log("Execute ls");
-  var  child = exec("ls", function (error, stdout, stderr) {
+  console.log(req);
+  var  child = exec(req, function (error, stdout, stderr) {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
@@ -33,7 +34,7 @@ app.get('/exec', function (req,res) {
     res.send(JSON.stringify(stdout));
   });
 });
-
+/*
 app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
   function writeError(message) {
     res.status(400);
@@ -73,7 +74,7 @@ app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) 
     saveAccount();
   }
 });
-
+*/
 app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/css/bootstrap.min.css'));
 });
@@ -83,12 +84,12 @@ app.get('*', function (req, res) {
 });
 
 
-app.on('stormpath.ready', function () {
+//app.on('stormpath.ready', function () {
   app.listen(3000, 'localhost', function (err) {
     if (err) {
       return console.error(err);
     }
   console.log('Listening at http://localhost:3000'); 
   });
-});
+//});
 
