@@ -4,6 +4,8 @@ var express = require('express');
 var stormpath = require('express-stormpath');
 var path = require('path');
 var bodyParser = require('body-parser');
+var exec = require('child_process').exec;
+//var axios = require('axios');
 
 var app = express();
 var compiler = webpack(config);
@@ -13,11 +15,24 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
+
 app.use(stormpath.init(app, {
   web: {
     produces: ['application/json']
   }
 }));
+
+app.get('/exec', function (req,res) {
+  console.log("Execute ls");
+  var  child = exec("ls", function (error, stdout, stderr) {
+    console.log('stdout: ' + stdout);
+    console.log('stderr: ' + stderr);
+    if (error !== null) {
+      console.log('exec error: ' + error);
+    }
+    res.send(JSON.stringify(stdout));
+  });
+});
 
 app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
   function writeError(message) {
@@ -67,11 +82,13 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
+
 app.on('stormpath.ready', function () {
   app.listen(3000, 'localhost', function (err) {
     if (err) {
       return console.error(err);
     }
-    console.log('Listening at http://localhost:3000');
+  console.log('Listening at http://localhost:3000'); 
   });
 });
+
