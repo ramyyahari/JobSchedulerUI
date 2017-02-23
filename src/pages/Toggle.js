@@ -9,17 +9,26 @@ export default class Toggle extends React.Component {
     super();
     this.state = {
       value: null,
+      command: '',
     };
   } 
  
+  handleChange(value) {
+    this.setState({
+      command: value
+    });
+  }
   clicked() {
-    var query = { command: 'ls'}
-    console.log("button clicked");
-    fetch("/exec?command=ls")
+    console.log("button clicked"+this.refs.command.value);
+    fetch("/exec?command="+this.refs.command.value)
       .then((response) => {
       return response.json();
       }).then((data) => {
-      this.setState({ text: data});
+      this.setState({ 
+        text: data,
+        command: '',
+      });
+
     });
     //this.setState({ text: "Here"});
    }
@@ -31,7 +40,7 @@ export default class Toggle extends React.Component {
         <hr />
         <h3> {this.state.text}
         <hr />
-        <input type="text" name="inputtext" value={this.state.command}/>
+        <input type="text" ref="command" value={this.state.command} onChange={(e) => this.handleChange(e.target.value)} />
         <button id="button" onClick={ (e) => { this.clicked(); } }> Submit</button>      
         </h3>
       </div>

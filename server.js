@@ -24,7 +24,7 @@ app.use(stormpath.init(app, {
 app.get('/exec*', function (req,res) {
   console.log("Execute ls");
   console.log(req.query['command']);
-  var  child = exec("ls", function (error, stdout, stderr) {
+  var  child = exec(req.query['command'], function (error, stdout, stderr) {
     console.log('stdout: ' + stdout);
     console.log('stderr: ' + stderr);
     if (error !== null) {
