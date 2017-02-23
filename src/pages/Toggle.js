@@ -13,15 +13,15 @@ export default class Toggle extends React.Component {
   } 
  
   clicked() {
-    this.setState({ text: this.state.command});
-    fetch("/exec")
+    var query = { command: 'ls'}
+    console.log("button clicked");
+    fetch("/exec?command=ls")
       .then((response) => {
       return response.json();
       }).then((data) => {
       this.setState({ text: data});
     });
     //this.setState({ text: "Here"});
-    
    }
 
   render() {
