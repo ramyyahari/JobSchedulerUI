@@ -2,21 +2,21 @@ import ReactStormpath, { Router, HomeRoute, LoginRoute, AuthenticatedRoute } fro
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Route, browserHistory } from 'react-router';
-import { Toggle, MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
+import { JobSelection, JobForm, Toggle, MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
 
 ReactStormpath.init();
 
 ReactDOM.render(
 	<Router history={browserHistory}>
-  		<HomeRoute path='/' component={MasterPage}>
-  			 <IndexRoute component={IndexPage} />
-  			 <LoginRoute path='/login' component={LoginPage} />
-  			 <Route path='/register' component={RegistrationPage} />
-  			 <Route path='/profile' component={ProfilePage} />
-  			 <AuthenticatedRoute>
-  			 	<HomeRoute path='/toggle' component={Toggle} /> 
-  			</AuthenticatedRoute>	
-  		</HomeRoute>
+  	<HomeRoute path='/' component={MasterPage}>
+  		<IndexRoute component={IndexPage} />
+  		<LoginRoute path='/login' component={LoginPage} />
+  		<Route path='/register' component={RegistrationPage} />
+  		<Route path='/profile' component={ProfilePage} />
+  		<AuthenticatedRoute>	
+        <HomeRoute path='/jobselection' component={JobSelection} />
+  		</AuthenticatedRoute>	
+  	</HomeRoute>
 	</Router>,
   	document.getElementById('app-container')
 );
