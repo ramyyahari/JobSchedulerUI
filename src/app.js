@@ -14,7 +14,7 @@ ReactDOM.render(
   		<Route path='/register' component={RegistrationPage} />
   		<Route path='/profile' component={ProfilePage} />
   		<AuthenticatedRoute>	
-        <HomeRoute path='/jobselection' component={JobSelection} />
+        <HomeRoute path='/jobform' component={JobForm} />
   		</AuthenticatedRoute>	
   	</HomeRoute>
 	</Router>,

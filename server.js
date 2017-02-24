@@ -5,7 +5,6 @@ var stormpath = require('express-stormpath');
 var path = require('path');
 var bodyParser = require('body-parser');
 var exec = require('child_process').exec;
-var mui = require('material-ui');
 
 var app = express();
 var compiler = webpack(config);

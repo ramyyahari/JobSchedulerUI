@@ -8,7 +8,7 @@ import Header from './Header';
 export default class is extends React.Component {
   render() {
     return (
-      <DocumentTitle title='My React App'>
+      <DocumentTitle title='Dhingra Lab'>
         <div className='MasterPage'>
           <Header />
           { this.props.children }

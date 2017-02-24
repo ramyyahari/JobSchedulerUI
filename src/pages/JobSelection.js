@@ -28,12 +28,14 @@ export default class JobSelection extends React.Component {
 
   render() {
   return(  
-    <Dropdown color="primary" label="Dropdown">
-        <DropdownItem link="#/link1">Option 1</DropdownItem>
-        <DropdownItem>Option 2</DropdownItem>
-        <DropdownItem>Option 3</DropdownItem>
-        <DropdownItem>Option 4</DropdownItem>
-      </Dropdown>
+  		<div class="mui-panel">
+	    <Dropdown color="primary" label="Dropdown">
+    	    <DropdownItem link="#/link1">Option 1</DropdownItem>
+        	<DropdownItem>Option 2</DropdownItem>
+        	<DropdownItem>Option 3</DropdownItem>
+        	<DropdownItem>Option 4</DropdownItem>
+      	</Dropdown>
+    </div>
   );
   }
 }

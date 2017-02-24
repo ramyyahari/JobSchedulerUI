@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { LoginLink, LogoutLink, Authenticated, NotAuthenticated } from 'react-stormpath';
+import Appbar from 'muicss/lib/react/appbar';
+import Tab from 'muicss/lib/react/tab';
+import Tabs from 'muicss/lib/react/tabs';
 
 export default class Header extends React.Component {
-  render() {
+ 
+render() {
     return (
       <nav className="navbar navbar-default navbar-static-top">
         <div className="container">
