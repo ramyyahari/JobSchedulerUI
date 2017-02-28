@@ -9,24 +9,28 @@ import Button from 'muicss/lib/react/button';
 
 export default class JobForm extends React.Component {
   
-  constructor() {
-    super();
-    this.state = {
-      value: null,
-      command: '',
-    }; 
-  }
  
-  handleChange(value) {
-    this.setState({
-      command: value
-    });
-  }
+  constructor() {
+     super();
+     this.state = {
+        command:'', 
+        memory:'',
+        walltime: '',
+        additional: '',    
+        value: null
+      };
+  } 
 
+  handleChange(name, e) {
+    var change = {};
+    change[name] = e.target.value;
+    this.setState(change);
+  }
+  
   clicked() {
-    console.log("button clicked: "+this.refs.command.value);
+    console.log("button clicked: "+this.state.command);
     
-    fetch("/exec?command="+this.refs.command.value)
+    fetch("/exec?command="+this.state.command)
       .then((response) => {
       return response.json();
       }).then((data) => {
@@ -35,14 +39,13 @@ export default class JobForm extends React.Component {
       });
 
     });
- //   console.log("button clicked");
   }
 
   render() {
   return(  
       <Form>    
         <legend>Enter job parameters</legend>
-        <Input hint="Job Name" ref="command" value={this.state.command} onChange={(e) => this.handleChange(e.target.value)}/>
+        <Input hint="Job Name" value={this.state.command} onChange={this.handleChange.bind(this, 'command')}/>
         <Input hint="Memory Size" />
         <Input hint="Walltime[hh:mm:ss]" />
         <Textarea type="text" hint="Additional Parameters: " />
