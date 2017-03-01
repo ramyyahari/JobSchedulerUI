@@ -20,15 +20,15 @@ export default class JobForm extends React.Component {
   constructor() {
     super();
     this.state = {
-      command:'', 
+      command:'ls', 
+      jobName: '',
       memory:'',
       walltime: '',
       additional: '',    
       value: null,
-      output: 'NULL',
       showComponent: false,
-      showBlastFarm: true,
-      selected: 'blastFarm' ,
+      showBlastFarm: false,
+      selected: '' ,
       output: 'NULL'
     };
     this.onChange = this.onChange.bind(this);
@@ -48,65 +48,63 @@ export default class JobForm extends React.Component {
       .then((response) => {
       return response.json();
       }).then((data) => {
-        this.setState({ 
-        output: data
-      });
-      console.log("sent:"+ data);
     });
   }
 
   onChange(e) {
-    //console.log('Option ' + e.target.value);
     
     this.setState({
       selected: e.target.label,
     });
     
     switch(e.target.value) {
+
       case "blastFarm": {
-        console.log('Option ' + e.target.value);
+        console.log('Option ' + e.target.value);       
         this.setState({
           showBlastFarm: true,
-          showComponent: false
+          showComponent: false,
+          command: "ls node_modules"
         });
       } break;
+      
       case "fastX":  console.log('Option ' + e.target.value); break;
+      
       case "defaultShell": console.log('Option ' + e.target.value); break;
+      
       case "opt4": {
         this.setState({
           showComponent: true,
           showBlastFarm: false
         });
       } break;        
-      case "opt5": console.log('Option ' + e.target.value); break;
+      
+      case "ls": console.log('Option ' + e.target.value); break;
     }
   }
   
   render() {
     
   return(   
-    <div>
       <Form>    
         <legend>Enter job parameters</legend>
-        <Input hint="Job Name" value={this.state.command} onChange={this.handleChange.bind(this, 'command')}/>
+        <Input hint="Job Name" value={this.state.jobName} onChange={this.handleChange.bind(this, 'jobName')}/>
         <Input hint="Memory Size" value={this.state.memory} onChange={this.handleChange.bind(this, 'memory')}/>
         <Input hint="Walltime[hh:mm:ss]" value={this.state.walltime} onChange={this.handleChange.bind(this, 'walltime')}/>
         <Textarea hint="Additional Parameters:" value={this.state.additional} onChange={this.handleChange.bind(this, 'additional')} />
         <legend>Select job</legend>
         <Select name="jobSelect" value={this.state.selected} onChange={this.onChange}>
+              <Option value="" />
               <Option label="Blast Farm" value="blastFarm" />
               <Option label="Fastx Toolkit" value="fastX" />
               <Option label="Default shell" value="defaultShell" />
               <Option label="Option 4" value="opt4" />
-              <Option label="Option 5" value="opt5" />
         </Select>
-        {this.state.showComponent ? <Toggle /> : null}
-        {this.state.showBlastFarm ? <BlastFarm /> : null}       
+        {this.state.showBlastFarm ? <BlastFarm /> : null}
+        {this.state.showComponent ? <Toggle /> : null}       
         <br />  
         <Button color="primary" variant="raised" onClick={ (e) => { this.clicked(); } }>Submit</Button>
       </Form>
-      {this.state.output}
-    </div>
     );
   }
 }
