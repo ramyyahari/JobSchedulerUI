@@ -12,6 +12,7 @@ import Select from 'muicss/lib/react/select';
 import Option from 'muicss/lib/react/option';
 
 import { Toggle} from './';
+import { BlastFarm} from './';
 
 export default class JobForm extends React.Component {
   
@@ -25,8 +26,13 @@ export default class JobForm extends React.Component {
       additional: '',    
       value: null,
       output: 'NULL',
-      showComponent: false
+      showComponent: false,
+      showBlastFarm: true,
+      selected: 'blastFarm' ,
+      output: 'NULL'
     };
+    this.onChange = this.onChange.bind(this);
+    this.clicked = this.clicked.bind(this);
   } 
 
   handleChange(name, e) {
@@ -42,26 +48,38 @@ export default class JobForm extends React.Component {
       .then((response) => {
       return response.json();
       }).then((data) => {
-      // this.setState({ 
-      //   output: data
-      // });
+        this.setState({ 
+        output: data
+      });
       console.log("sent:"+ data);
     });
   }
 
-  onChange() {
+  onChange(e) {
     //console.log('Option ' + e.target.value);
-    // switch(e.target.value) {
-    //   case "blastFarm":
-    //   case "fastX":
-    //   case "defaultShell":
-    //   case "opt4": {
-       this.setState({
-      showComponent: true,
+    
+    this.setState({
+      selected: e.target.label,
     });
-    //   }         
-    //   case "opt5":
-    // }
+    
+    switch(e.target.value) {
+      case "blastFarm": {
+        console.log('Option ' + e.target.value);
+        this.setState({
+          showBlastFarm: true,
+          showComponent: false
+        });
+      } break;
+      case "fastX":  console.log('Option ' + e.target.value); break;
+      case "defaultShell": console.log('Option ' + e.target.value); break;
+      case "opt4": {
+        this.setState({
+          showComponent: true,
+          showBlastFarm: false
+        });
+      } break;        
+      case "opt5": console.log('Option ' + e.target.value); break;
+    }
   }
   
   render() {
@@ -75,20 +93,19 @@ export default class JobForm extends React.Component {
         <Input hint="Walltime[hh:mm:ss]" value={this.state.walltime} onChange={this.handleChange.bind(this, 'walltime')}/>
         <Textarea hint="Additional Parameters:" value={this.state.additional} onChange={this.handleChange.bind(this, 'additional')} />
         <legend>Select job</legend>
-        <Select name="jobSelect" value="opt1" onChange={ (e) => {this.onChange(); } }>
+        <Select name="jobSelect" value={this.state.selected} onChange={this.onChange}>
               <Option label="Blast Farm" value="blastFarm" />
               <Option label="Fastx Toolkit" value="fastX" />
               <Option label="Default shell" value="defaultShell" />
               <Option label="Option 4" value="opt4" />
               <Option label="Option 5" value="opt5" />
         </Select>
-        {this.state.showComponent ?
-           <Toggle /> :
-           null
-        }
+        {this.state.showComponent ? <Toggle /> : null}
+        {this.state.showBlastFarm ? <BlastFarm /> : null}       
         <br />  
         <Button color="primary" variant="raised" onClick={ (e) => { this.clicked(); } }>Submit</Button>
       </Form>
+      {this.state.output}
     </div>
     );
   }

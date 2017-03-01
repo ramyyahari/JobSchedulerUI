@@ -2,7 +2,7 @@ import ReactStormpath, { Router, HomeRoute, LoginRoute, AuthenticatedRoute } fro
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Route, browserHistory } from 'react-router';
-import { JobSelection, JobForm, Toggle, MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
+import { JobForm, Toggle, MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
 
 ReactStormpath.init();
 
