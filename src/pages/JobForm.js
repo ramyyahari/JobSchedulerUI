@@ -12,7 +12,7 @@ import Select from 'muicss/lib/react/select';
 import Option from 'muicss/lib/react/option';
 
 import { Toggle} from './';
-import { BlastFarm} from './';
+import  BlastFarm from './BlastFarm';
 
 export default class JobForm extends React.Component {
   
@@ -29,7 +29,7 @@ export default class JobForm extends React.Component {
       showComponent: false,
       showBlastFarm: false,
       selected: '' ,
-      output: 'NULL'
+      input_name: ''
     };
     this.onChange = this.onChange.bind(this);
     this.clicked = this.clicked.bind(this);
@@ -44,7 +44,7 @@ export default class JobForm extends React.Component {
   
   clicked() {
     console.log("button clicked: "+this.state.command);  
-    fetch("/exec?command="+this.state.command)
+    fetch("/exec?command="+this.state.command+"&input_name="+this.state.input_name)
       .then((response) => {
       return response.json();
       }).then((data) => {
@@ -64,7 +64,7 @@ export default class JobForm extends React.Component {
         this.setState({
           showBlastFarm: true,
           showComponent: false,
-          command: "ls node_modules"
+          command: "ls node_modules", 
         });
       } break;
       
@@ -73,6 +73,7 @@ export default class JobForm extends React.Component {
       case "defaultShell": console.log('Option ' + e.target.value); break;
       
       case "opt4": {
+        console.log("Input name" + this.state.input_name);
         this.setState({
           showComponent: true,
           showBlastFarm: false
@@ -101,7 +102,7 @@ export default class JobForm extends React.Component {
               <Option label="Option 4" value="opt4" />
         </Select>
         {this.state.showBlastFarm ? <BlastFarm /> : null}
-        {this.state.showComponent ? <Toggle /> : null}       
+        {this.state.showComponent ? <Toggle content={this.state.input}/> : null}       
         <br />  
         <Button color="primary" variant="raised" onClick={ (e) => { this.clicked(); } }>Submit</Button>
       </Form>

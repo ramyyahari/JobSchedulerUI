@@ -25,5 +25,5 @@ export default class BlastFarm extends React.Component {
         <Input hint="Input File Name" value={this.state.input_name} onChange={this.handleChange.bind(this, 'input_name')} />
       </div>
     );
- }
+  }
 }
