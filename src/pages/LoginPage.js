@@ -1,6 +1,8 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
-import { LoginForm } from 'react-stormpath';
+import { LoginForm, NotAuthenticated } from 'react-stormpath';
+import { Link } from 'react-router';
+import Button from 'muicss/lib/react/button';
 
 export default class LoginPage extends React.Component {
   render() {
@@ -14,7 +16,12 @@ export default class LoginPage extends React.Component {
             </div>
           </div>
           <LoginForm />
-        </div>
+            
+          <Link to="/register">
+            <Button variant="flat" color="primary"> Create account</Button>
+          </Link>
+          
+          </div>
       </DocumentTitle>
     );
   }

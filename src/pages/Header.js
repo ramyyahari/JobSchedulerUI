@@ -5,15 +5,30 @@ import AppBar from 'material-ui/AppBar';
 import Tab from 'muicss/lib/react/tab';
 import Tabs from 'muicss/lib/react/tabs';
 import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
-import Apps from 'material-ui/svg-icons/navigation/apps';
-import Button from 'muicss/lib/react/button';
+import IconMenu from 'material-ui/IconMenu';
+import Menu from 'material-ui/svg-icons/navigation/menu';
+import AccountCircle from 'material-ui/svg-icons/action/account-circle';
+import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
+import MoreVert from 'material-ui/svg-icons/navigation/more-vert';
+import Home from 'material-ui/svg-icons/action/home';
+import RaisedButton from 'material-ui/RaisedButton';
+import {fullWhite} from 'material-ui/styles/colors';
 
 injectTapEventPlugin();
 
+const styles = {
+  text_format: {
+    color: fullWhite
+  },
+  button_margin: {
+    margin: 12
+  }
+};
 
 export default class Header extends React.Component {
 
@@ -43,10 +58,19 @@ render() {
        
       <AppBar 
         title="Dhingra Lab"
-        iconClassNameRight="muidocs-icon-navigation-expand-more">
-      
+        //onTitleTouchTap={<Link to="/" />}
+        iconElementLeft={ <FlatButton 
+                          onClick={ (e) => {this.handleToggle();} }
+                          icon={<Menu color={fullWhite}/>} /> }
+        >
           <Authenticated>            
-              <Drawer width={200} openSecondary={true} open={this.state.open}>
+              <Drawer width={200} open={this.state.open}> 
+                <AppBar 
+                  iconElementLeft={<FlatButton 
+                                    onClick={ (e) => {this.handleClose();} }
+                                    icon={<ChevronLeft color={fullWhite}/>} 
+                                  />}
+                />
                 <MenuItem 
                   linkButton
                   containerElement={<Link to="/jobform" />}
@@ -59,33 +83,30 @@ render() {
                 >Lab Notebooks</MenuItem>
               </Drawer>
           </Authenticated>
-          <Link to="/">
-            <FlatButton color="primary"
-              >Home</FlatButton>
-          </Link>    
           <Authenticated>
             <Link to="/profile">
-             <FlatButton color="primary"
-             >Profile</FlatButton>
+             <IconButton style={styles.button_margin}><AccountCircle color={fullWhite} /></IconButton>
             </Link>
           </Authenticated>
+          <Authenticated>
+            <IconMenu
+              iconButtonElement={<IconButton style={styles.button_margin}><MoreVert color={fullWhite}/></IconButton>}
+              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+            >
+              <MenuItem>
+                  <FlatButton color="primary">
+                    <LogoutLink />
+                  </FlatButton>
+              </MenuItem>
+            </IconMenu>
+          </Authenticated>    
           <NotAuthenticated>
             <Link to="/login">
-              <FlatButton color="primary"
-              >Login</FlatButton>
+              <FlatButton label="Login" labelStyle={styles.text_format} style={styles.button_margin} />
             </Link>
           </NotAuthenticated>
-          <NotAuthenticated>
-            <Link to="/register">
-              <FlatButton color="primary" style="color:#FAFAFA;"
-              >Create Account</FlatButton>
-            </Link>
-          </NotAuthenticated>
-          <Authenticated>
-            <FlatButton color="primary"
-            ><LogoutLink /></FlatButton>
-          </Authenticated>
-        </AppBar>            
+       </AppBar>            
       </div>
     </MuiThemeProvider>
             
