@@ -94,7 +94,12 @@ render() {
               anchorOrigin={{horizontal: 'right', vertical: 'top'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
             >
-              <MenuItem>
+            <MenuItem>
+              <Link to="/profile">
+              <IconButton style={styles.button_margin}><AccountCircle color={fullWhite} /></IconButton>
+              </Link>
+            </MenuItem>
+            <MenuItem>
                   <FlatButton color="primary">
                     <LogoutLink />
                   </FlatButton>
