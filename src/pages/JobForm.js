@@ -11,8 +11,8 @@ import DropdownItem from 'muicss/lib/react/dropdown-item';
 import Select from 'muicss/lib/react/select';
 import Option from 'muicss/lib/react/option';
 
-import { Toggle} from './';
-import  BlastFarm from './BlastFarm';
+import { Toggle } from './';
+import { BlastFarm } from './';
 
 export default class JobForm extends React.Component {
   
@@ -64,7 +64,7 @@ export default class JobForm extends React.Component {
         this.setState({
           showBlastFarm: true,
           showComponent: false,
-          command: "ls node_modules", 
+          command: "perl ", 
         });
       } break;
       
@@ -83,16 +83,10 @@ export default class JobForm extends React.Component {
       case "ls": console.log('Option ' + e.target.value); break;
     }
   }
-  
   render() {
     
   return(   
       <Form>    
-        <legend>Enter job parameters</legend>
-        <Input hint="Job Name" value={this.state.jobName} onChange={this.handleChange.bind(this, 'jobName')}/>
-        <Input hint="Memory Size" value={this.state.memory} onChange={this.handleChange.bind(this, 'memory')}/>
-        <Input hint="Walltime[hh:mm:ss]" value={this.state.walltime} onChange={this.handleChange.bind(this, 'walltime')}/>
-        <Textarea hint="Additional Parameters:" value={this.state.additional} onChange={this.handleChange.bind(this, 'additional')} />
         <legend>Select job</legend>
         <Select name="jobSelect" value={this.state.selected} onChange={this.onChange}>
               <Option value="" />
@@ -104,6 +98,11 @@ export default class JobForm extends React.Component {
         {this.state.showBlastFarm ? <BlastFarm /> : null}
         {this.state.showComponent ? <Toggle content={this.state.input}/> : null}       
         <br />  
+        <legend>Enter job parameters</legend>
+        <Input hint="Job Name" value={this.state.jobName} onChange={this.handleChange.bind(this, 'jobName')}/>
+        <Input hint="Memory Size" value={this.state.memory} onChange={this.handleChange.bind(this, 'memory')}/>
+        <Input hint="Walltime[hh:mm:ss]" value={this.state.walltime} onChange={this.handleChange.bind(this, 'walltime')}/>
+        <Textarea hint="Additional Parameters:" value={this.state.additional} onChange={this.handleChange.bind(this, 'additional')} />
         <Button color="primary" variant="raised" onClick={ (e) => { this.clicked(); } }>Submit</Button>
       </Form>
     );
