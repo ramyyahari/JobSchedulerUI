@@ -60,6 +60,7 @@ render() {
         title="Dhingra Lab"
         //onTitleTouchTap={<Link to="/" />}
         iconElementLeft={ <FlatButton 
+                          style={styles.button_margin}
                           onClick={ (e) => {this.handleToggle();} }
                           icon={<Menu color={fullWhite}/>} /> }
         >
@@ -91,16 +92,16 @@ render() {
           <Authenticated>
             <IconMenu
               iconButtonElement={<IconButton style={styles.button_margin}><MoreVert color={fullWhite}/></IconButton>}
-              anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-              targetOrigin={{horizontal: 'right', vertical: 'top'}}
+              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
             >
             <MenuItem>
               <Link to="/profile">
-              <IconButton style={styles.button_margin}><AccountCircle color={fullWhite} /></IconButton>
+                 <FlatButton primary={true}>Profile</FlatButton>               
               </Link>
             </MenuItem>
             <MenuItem>
-                  <FlatButton color="primary">
+                  <FlatButton>
                     <LogoutLink />
                   </FlatButton>
               </MenuItem>
