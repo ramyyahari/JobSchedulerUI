@@ -18,6 +18,8 @@ import MoreVert from 'material-ui/svg-icons/navigation/more-vert';
 import Home from 'material-ui/svg-icons/action/home';
 import RaisedButton from 'material-ui/RaisedButton';
 import {fullWhite} from 'material-ui/styles/colors';
+import {browserHistory} from 'react-router';
+
 
 injectTapEventPlugin();
 
@@ -29,6 +31,7 @@ const styles = {
     margin: 12
   }
 };
+
 
 export default class Header extends React.Component {
 
@@ -51,14 +54,18 @@ export default class Header extends React.Component {
     this.setState({open: false});
   }
 
-render() {
+  handleTouchTap() {
+     browserHistory.push('/');
+}
+
+  render() {
     return (
     <MuiThemeProvider>
       <div>
        
       <AppBar 
         title="Dhingra Lab"
-        //onTitleTouchTap={<Link to="/" />}
+        onTitleTouchTap={ (e) => {this.handleTouchTap();} }
         iconElementLeft={ <FlatButton 
                           style={styles.button_margin}
                           onClick={ (e) => {this.handleToggle();} }

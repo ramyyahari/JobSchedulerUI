@@ -16,12 +16,12 @@ export default class LoginPage extends React.Component {
             </div>
           </div>
           <LoginForm />
-            
-          <Link to="/register">
-            <Button variant="flat" color="primary"> Create account</Button>
-          </Link>
-          
-          </div>
+          <div className="row">
+            <div className="col-md-2 col-md-offset-5">
+              <Link to="/register"> Create account </Link>
+            </div>
+          </div>  
+        </div>
       </DocumentTitle>
     );
   }
