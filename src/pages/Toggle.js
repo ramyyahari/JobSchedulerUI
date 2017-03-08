@@ -25,7 +25,7 @@ export default class Toggle extends React.Component {
       return (
         <div>
           <h3>{total}<br/>
-            <Input hint="New element" value={this.state.content} onChange={this.handleChange.bind(this, 'content')} />
+            <Input hint="Enter shell command" value={this.state.content} onChange={this.handleChange.bind(this, 'content')} />
           </h3>
         </div>
       );

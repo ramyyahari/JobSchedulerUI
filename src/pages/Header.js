@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 import { LoginLink, LogoutLink, Authenticated, NotAuthenticated } from 'react-stormpath';
 import AppBar from 'material-ui/AppBar';
-import Tab from 'muicss/lib/react/tab';
-import Tabs from 'muicss/lib/react/tabs';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -15,8 +13,6 @@ import Menu from 'material-ui/svg-icons/navigation/menu';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
 import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
 import MoreVert from 'material-ui/svg-icons/navigation/more-vert';
-import Home from 'material-ui/svg-icons/action/home';
-import RaisedButton from 'material-ui/RaisedButton';
 import {fullWhite} from 'material-ui/styles/colors';
 import {browserHistory} from 'react-router';
 
@@ -81,7 +77,7 @@ export default class Header extends React.Component {
                 />
                 <MenuItem 
                   linkButton
-                  containerElement={<Link to="/jobform" />}
+                  containerElement={<Link to="/jobsubmission" />}
                   onTouchTap={ (e) => {this.handleClose();} } 
                 > Job submission</MenuItem>
                 <MenuItem
@@ -121,67 +117,7 @@ export default class Header extends React.Component {
           </NotAuthenticated>
        </AppBar>            
       </div>
-    </MuiThemeProvider>
-            
-      
+    </MuiThemeProvider>     
     );
   }
 }
-
-
-
-// <nav className="navbar navbar-default navbar-static-top">
-//         <div className="container">
-//           <div id="navbar-collapse" className="collapse navbar-collapse">
-//             <ul className="nav navbar-nav">
-//               <Authenticated>              
-//                 <li>  
-//                   <MuiThemeProvider>
-//                     <div>
-//                       <FlatButton
-//                         icon={<Apps />}
-//                         onTouchTap={ (e) => {this.handleToggle();} }
-//                       />
-//                       <Drawer width={200} openSecondary={true} open={this.state.open}>
-//                         <MenuItem 
-//                           linkButton
-//                           containerElement={<Link to="/jobform" />}
-//                           onTouchTap={ (e) => {this.handleClose();} } 
-//                         > Job submission</MenuItem>
-//                         <MenuItem
-//                           linkButton
-//                           containerElement={<Link to="/notebook" />}
-//                           onTouchTap={ (e) => {this.handleClose();} }
-//                         >Lab Notebooks</MenuItem>
-//                       </Drawer>
-//                     </div>
-//                   </MuiThemeProvider>
-//               </li>
-//               </Authenticated>   
-//               <li><Link to="/">Home</Link></li>
-//               <Authenticated>
-//                 <li>
-//                   <Link to="/profile">Profile</Link>
-//                 </li>
-//               </Authenticated>
-//               </ul>
-//             <ul className="nav navbar-nav navbar-right">
-//               <NotAuthenticated>
-//                 <li>
-//                   <LoginLink />
-//                 </li>
-//               </NotAuthenticated>
-//               <NotAuthenticated>
-//                 <li>
-//                   <Link to="/register">Create Account</Link>
-//                 </li>
-//               </NotAuthenticated>
-//               <Authenticated>
-//                 <li>
-//                   <LogoutLink />
-//                 </li>
-//               </Authenticated>
-//             </ul>
-//           </div>
-//         </div>
-//       </nav>
