@@ -13,6 +13,7 @@ import Option from 'muicss/lib/react/option';
 
 import { JobSelection } from './';
 import { SchedulerForm } from './';
+import { JobForm } from './';
 
 class JobSubmission extends React.Component {
 
@@ -45,12 +46,12 @@ class JobSubmission extends React.Component {
   }
 
   getStepContent(stepIndex) {
+    const {selected} = this.state;   
     switch (stepIndex) {
       case 0:
-        const {selected} = this.state;
         return <JobSelection getSelect={this.getSelection} />; 
       case 1:
-        return this.state.selected;
+        return <JobForm choice={this.state.selected} />;
       case 2:
         return <SchedulerForm />;
       default:

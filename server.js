@@ -72,6 +72,7 @@ app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) 
     saveAccount();
   }
 });
+
 app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/css/bootstrap.min.css'));
 });
@@ -79,7 +80,6 @@ app.get('/css/bootstrap.min.css', function (req, res) {
 app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/index.html'));
 });
-
 
 app.on('stormpath.ready', function () {
   app.listen(3000, 'localhost', function (err) {
