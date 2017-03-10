@@ -9,6 +9,9 @@
     "test": "jest",
     "coverage": "jest --coverage"
   },
+  "engines": {
+    "node": "6.5.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ramyyahari/JobSchedulerUI.git"
