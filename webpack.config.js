@@ -9,7 +9,7 @@ var alias = {};
 
 module.exports = {
   entry: [
-    './src/app'
+    './src'
   ],
   devtool: 'eval-source-map',
   output: {
@@ -25,5 +25,5 @@ module.exports = {
     include: path.join(__dirname, 'src')
     }]
   },
-  resolve: {alias: alias}
+  resolve: {alias: alias},
 };
