@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack && node server.js",
+    "watch": "webpack && nodemon --watch server.js server.js",
     "test": "jest",
     "coverage": "jest --coverage"
   },
@@ -41,7 +42,7 @@
     "simple-react-form": "^1.9.0",
     "simple-react-form-material-ui": "^1.7.5",
     "superagent": "^3.4.4",
-    "webpack": "^2.2.1",
+    "webpack": "^2.2.1"
   },
   "devDependencies": {
     "assets-webpack-plugin": "3.2.0",
