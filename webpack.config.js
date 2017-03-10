@@ -1,15 +1,9 @@
 var path = require('path');
 var webpack = require('webpack');
-var reactDomLibPath = path.join(__dirname, "./node_modules/react-dom/lib");
-var alias = {};
-["EventPluginHub", "EventConstants", "EventPluginUtils", "EventPropagators",
- "SyntheticUIEvent", "CSSPropertyOperations", "ViewportMetrics"].forEach(function(filename){
-    alias["react/lib/"+filename] = path.join(__dirname, "./node_modules/react-dom/lib", filename);
-});
 
 module.exports = {
   entry: [
-    './src'
+    './src/app'
   ],
   devtool: 'eval-source-map',
   output: {
@@ -24,6 +18,5 @@ module.exports = {
     loaders: ['babel-loader'],
     include: path.join(__dirname, 'src')
     }]
-  },
-  resolve: {alias: alias},
+  }
 };

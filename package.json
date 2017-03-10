@@ -43,6 +43,7 @@
     "react-router": "^3.0.2",
     "react-select": "^1.0.0-rc.3",
     "react-stormpath": "^2.0.0",
+    "react-tap-event-plugin": "^2.0.1",
     "simple-react-form": "^1.9.0",
     "simple-react-form-material-ui": "^1.7.5",
     "superagent": "^3.4.4",
