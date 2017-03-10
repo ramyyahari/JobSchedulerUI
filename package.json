@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack && node server.js",
-    "watch": "webpack && nodemon --watch server.js server.js"
+    //"start": "webpack && nodemon --watch server.js server.js"
     "test": "jest",
     "coverage": "jest --coverage"
   },
