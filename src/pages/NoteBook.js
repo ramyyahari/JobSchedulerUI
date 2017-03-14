@@ -6,13 +6,6 @@ import Dropzone from 'react-dropzone';
 
 export default class NoteBook extends React.Component {
  
-  // constructor() {
-  //    super();
-  //    this.state = {
-  //       content:'', 
-  //      };
-  // } 
-   
   onDrop(acceptedFiles, rejectedFiles) {
       console.log('Accepted files: ', acceptedFiles);
       console.log('Rejected files: ', rejectedFiles);

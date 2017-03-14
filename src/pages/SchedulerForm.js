@@ -25,7 +25,6 @@ export default class SchedulerForm extends React.Component {
     var change = {};
     change[name] = e.target.value;
     this.setState(change);
- //   console.log(this.state.value);
   }
   
   clicked() {
