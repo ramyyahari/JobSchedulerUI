@@ -29,11 +29,10 @@ export default class JobSelection extends React.Component {
   return(   
       <Form>    
         <legend>Select job</legend>
-        <Select name="jobSelect" value={this.state.selected} onChange={this.onChange}>
-              <Option value="" />
+        <Select name="jobSelect" required={true} value={this.state.selected} onChange={this.onChange}>
+              <Option label="Default shell" value="defaultShell" />
               <Option label="Blast Farm" value="blastFarm" />
               <Option label="Fastx Toolkit" value="fastX" />
-              <Option label="Default shell" value="defaultShell" />
               <Option label="Option 4" value="opt4" />
         </Select>
        <br />  

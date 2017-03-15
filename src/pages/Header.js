@@ -62,6 +62,7 @@ export default class Header extends React.Component {
       <AppBar 
         title="Dhingra Lab"
         onTitleTouchTap={ (e) => {this.handleTouchTap();} }
+        style={{position: 'fixed'}}
         iconElementLeft={ <FlatButton 
                           style={styles.button_margin}
                           onClick={ (e) => {this.handleToggle();} }
