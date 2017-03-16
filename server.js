@@ -5,10 +5,12 @@ var stormpath = require('express-stormpath');
 var path = require('path');
 var bodyParser = require('body-parser');
 var exec = require('child_process').exec;
+var favicon = require('serve-favicon');
 
 var app = express();
 var compiler = webpack(config);
 
+app.use(favicon(__dirname+'/src/favicon.ico'));
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
