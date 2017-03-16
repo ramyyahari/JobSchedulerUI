@@ -24,7 +24,7 @@ const styles = {
     color: fullWhite
   },
   button_margin: {
-    margin: 12
+    margin: 8
   }
 };
 
@@ -69,13 +69,13 @@ export default class Header extends React.Component {
                           icon={<Menu color={fullWhite}/>} /> }
         >
           <Authenticated>            
-              <Drawer width={200} open={this.state.open}> 
-                <AppBar 
-                  iconElementLeft={<FlatButton 
-                                    onClick={ (e) => {this.handleClose();} }
-                                    icon={<ChevronLeft color={fullWhite}/>} 
-                                  />}
-                />
+              <Drawer 
+                docked={false}
+                width={200} 
+                open={this.state.open}
+                onRequestChange={(open) => this.setState({open})}
+              > 
+                <AppBar showMenuIconButton={false}/>
                 <MenuItem 
                   linkButton
                   containerElement={<Link to="/jobsubmission" />}
@@ -94,16 +94,12 @@ export default class Header extends React.Component {
               </Drawer>
           </Authenticated>
           <Authenticated>
-            <Link to="/profile">
-             <IconButton style={styles.button_margin}><AccountCircle color={fullWhite} /></IconButton>
-            </Link>
-          </Authenticated>
-          <Authenticated>
             <IconMenu
               iconButtonElement={<IconButton style={styles.button_margin}><MoreVert color={fullWhite}/></IconButton>}
               anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
               targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
             >
+            <MenuItem></MenuItem>          
             <MenuItem>
               <Link to="/profile">
                  <FlatButton primary={true}>Profile</FlatButton>               

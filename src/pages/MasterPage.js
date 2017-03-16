@@ -11,6 +11,10 @@ export default class is extends React.Component {
       <DocumentTitle title='Dhingra Lab'>
         <div className='MasterPage'>
           <Header />
+          <br />
+          <br />
+          <br />
+          <br />
           { this.props.children }
         </div>
       </DocumentTitle>
