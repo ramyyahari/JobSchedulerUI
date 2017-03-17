@@ -11,8 +11,6 @@ import MenuItem from 'material-ui/MenuItem';
 import IconMenu from 'material-ui/IconMenu';
 import Menu from 'material-ui/svg-icons/navigation/menu';
 import AccountCircle from 'material-ui/svg-icons/action/account-circle';
-import ChevronLeft from 'material-ui/svg-icons/navigation/chevron-left';
-import MoreVert from 'material-ui/svg-icons/navigation/more-vert';
 import {fullWhite} from 'material-ui/styles/colors';
 import {browserHistory} from 'react-router';
 
@@ -94,12 +92,12 @@ export default class Header extends React.Component {
               </Drawer>
           </Authenticated>
           <Authenticated>
+           
             <IconMenu
-              iconButtonElement={<IconButton style={styles.button_margin}><MoreVert color={fullWhite}/></IconButton>}
+              iconButtonElement={<IconButton style={styles.button_margin}><AccountCircle color={fullWhite}/></IconButton>}
               anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
+              targetOrigin={{horizontal: 'left', vertical: 'top'}}
             >
-            <MenuItem></MenuItem>          
             <MenuItem>
               <Link to="/profile">
                  <FlatButton primary={true}>Profile</FlatButton>               

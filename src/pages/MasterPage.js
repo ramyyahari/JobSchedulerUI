@@ -9,7 +9,7 @@ export default class is extends React.Component {
   render() {
     return (
       <DocumentTitle title='Dhingra Lab'>
-        <div className='MasterPage'>
+        <div className='MasterPage'>        
           <Header />
           <br />
           <br />

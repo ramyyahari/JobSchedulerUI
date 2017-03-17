@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && nodemon --watch server.js server.js",
+    "start": "webpack && node server.js",
     "test": "jest",
     "coverage": "jest --coverage"
   },
@@ -44,6 +44,7 @@
     "react-select": "^1.0.0-rc.3",
     "react-stormpath": "^2.0.0",
     "react-tap-event-plugin": "^2.0.1",
+    "serve-favicon": "^2.4.1",
     "simple-react-form": "^1.9.0",
     "simple-react-form-material-ui": "^1.7.5",
     "superagent": "^3.4.4",
