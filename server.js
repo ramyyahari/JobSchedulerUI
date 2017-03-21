@@ -6,7 +6,9 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var exec = require('child_process').exec;
 var favicon = require('serve-favicon');
-
+var multer = require('multer'),
+  bodyParser = require('body-parser'),
+  path = require('path');
 var app = express();
 var compiler = webpack(config);
 
@@ -35,6 +37,24 @@ app.get('/exec*', function (req,res) {
   });
 });
 
+app.post('/upload', multer({ dest: './uploads/'}).single('upl'), function(req,res){
+  console.log(req.body); //form fields
+  /* example output:
+  { title: 'abc' }
+   */
+  console.log(req.file); //form files
+  /* example output:
+            { fieldname: 'upl',
+              originalname: 'grumpy.png',
+              encoding: '7bit',
+              mimetype: 'image/png',
+              destination: './uploads/',
+              filename: '436ec561793aa4dc475a88e84776b1b9',
+              path: 'uploads/436ec561793aa4dc475a88e84776b1b9',
+              size: 277056 }
+   */
+  res.status(204).end();
+});
 app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
   function writeError(message) {
     res.status(400);
