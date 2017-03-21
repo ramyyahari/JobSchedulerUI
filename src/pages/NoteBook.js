@@ -1,9 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
-import Input from 'muicss/lib/react/input';
-import Dropzone from 'react-dropzone';
-import Paper from 'material-ui/Paper';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import {Tabs, Tab} from 'material-ui/Tabs';
@@ -14,14 +11,11 @@ var styles = {
     flexWrap: 'wrap',
     backgroundColor: 'indigo',
     position: 'fixed',
-    width: '100%'
-  },
-  tabs: {
-    float: 'left'
   },
   tabItems:{
     backgroundColor: 'indigo',
-    width: 'auto'
+    width: 'auto',
+    padding: '8'
   }
 };
 
@@ -51,11 +45,11 @@ onFocus(value) {
     return (
         <MuiThemeProvider>   
           <div>
-            <AppBar title="Portfolio" 
-              titleStyle={{width: '100%'}}      
+            <AppBar title="Portfolio"  
+              titleStyle={{ width: 'auto'}}    
               showMenuIconButton={false} 
               style={styles.appBar}>    
-              <Tabs value={this.state.selected} style={styles.tab} tabItemContainerStyle={styles.tabItems}>
+              <Tabs value={this.state.selected} tabItemContainerStyle={styles.tabItems}>
                 <Tab label=" Item One " style={{ width:'auto', padding: '8'}} value={0} />
                 <Tab label=" Item two " style={{ width: 'auto' , padding: '8'}} value={1} />
                 <Tab label=" Item three " style={{ width: 'auto', padding: '8'}} value={2}/>
