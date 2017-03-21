@@ -27,11 +27,9 @@ export default class NoteBook extends React.Component {
     this.setState({
       selected: e.target.label,
     });
-    //this.props.getSelect(e.target.value);
   }  
 
 onFocus(value) {
-  //alert(value);
   this.setState({
       selected: value,
     });
