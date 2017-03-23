@@ -11,9 +11,10 @@ import superagent from 'superagent';
 export default class NoteBook extends React.Component {
   
   onDrop(file) {
+    
     var formData = new FormData();
         formData.append('photo', file[0]);
-    
+    console.log(formData.get('photo'));
     superagent.post('/upload')
       .send(formData)
       .end(function(err, resp) {
@@ -23,7 +24,7 @@ export default class NoteBook extends React.Component {
 }
   render() {
     return (
-      <Dropzone onDrop={this.onDrop}>
+      <Dropzone onDrop={ (file) => this.onDrop(file)}>
         <div>Try dropping some files here, or click to select files to upload.</div>
       </Dropzone>
     );
