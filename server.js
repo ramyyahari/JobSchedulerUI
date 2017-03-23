@@ -6,13 +6,22 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var exec = require('child_process').exec;
 var favicon = require('serve-favicon');
-var multer = require('multer'),
-  bodyParser = require('body-parser'),
-  path = require('path');
 var app = express();
 var compiler = webpack(config);
+var multer = require('multer');
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+});
+var upload = multer({ storage: storage});
 
 app.use(favicon(__dirname+'/src/favicon.ico'));
+
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
   publicPath: config.output.publicPath
@@ -25,7 +34,7 @@ app.use(stormpath.init(app, {
 }));
 
 app.get('/exec*', function (req,res) {
-  console.log("Execute ls");
+  console.log("Execute ls"+ req.user);
   console.log(req.query['command']);
   var  child = exec(req.query['command'], function (error, stdout, stderr) {
     console.log('stdout: ' + stdout);
@@ -37,25 +46,12 @@ app.get('/exec*', function (req,res) {
   });
 });
 
-app.post('/upload', multer({ dest: './uploads/'}).single('upl'), function(req,res){
-  console.log(req.body); //form fields
-  /* example output:
-  { title: 'abc' }
-   */
-  console.log(req.file); //form files
-  /* example output:
-            { fieldname: 'upl',
-              originalname: 'grumpy.png',
-              encoding: '7bit',
-              mimetype: 'image/png',
-              destination: './uploads/',
-              filename: '436ec561793aa4dc475a88e84776b1b9',
-              path: 'uploads/436ec561793aa4dc475a88e84776b1b9',
-              size: 277056 }
-   */
-  res.status(204).end();
+app.post('/upload', upload.single('photo'), function(req, res, next){
+  res.end(req.file);
 });
+
 app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
+
   function writeError(message) {
     res.status(400);
     res.json({ message: message, status: 400 });
@@ -104,6 +100,7 @@ app.get('*', function (req, res) {
 });
 
 app.on('stormpath.ready', function () {
+
   app.listen(3000, 'localhost', function (err) {
     if (err) {
       return console.error(err);
