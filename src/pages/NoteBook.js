@@ -3,19 +3,29 @@ import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-import RaisedButton from 'material-ui/RaisedButton';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import {List, ListItem} from 'material-ui/List';
+import Dropzone from 'react-dropzone';
+import superagent from 'superagent';
 
 export default class NoteBook extends React.Component {
   
+  onDrop(file) {
+    var formData = new FormData();
+        formData.append('photo', file[0]);
+    
+    superagent.post('/upload')
+      .send(formData)
+      .end(function(err, resp) {
+      if (err) { console.error(err); }
+      return resp;
+    });
+}
   render() {
     return (
-      <MuiThemeProvider>
-        <RaisedButton
-          containerElement='label' // <-- Just add me!
-          label='My Label'>
-          <input type="file" />
-        </RaisedButton>
-      </MuiThemeProvider>
+      <Dropzone onDrop={this.onDrop}>
+        <div>Try dropping some files here, or click to select files to upload.</div>
+      </Dropzone>
     );
  }
 }
