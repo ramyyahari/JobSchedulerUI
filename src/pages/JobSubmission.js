@@ -7,9 +7,6 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Form from 'muicss/lib/react/form';
-import Select from 'muicss/lib/react/select';
-import Option from 'muicss/lib/react/option';
 
 import { JobSelection } from './';
 import { SchedulerForm } from './';

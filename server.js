@@ -9,6 +9,7 @@ var favicon = require('serve-favicon');
 var app = express();
 var compiler = webpack(config);
 var multer = require('multer');
+var request = require("request");
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -47,49 +48,52 @@ app.get('/exec*', function (req,res) {
 });
 
 app.post('/upload', upload.single('photo'), function(req, res, next){
-  res.end(req.file);
+  request("http://localhost:3000/me", function(error, response, body) {
+    console.log(response);
+  });  
+  res.end();
 });
 
-app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
+// app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
 
-  function writeError(message) {
-    res.status(400);
-    res.json({ message: message, status: 400 });
-    res.end();
-  }
+//   function writeError(message) {
+//     res.status(400);
+//     res.json({ message: message, status: 400 });
+//     res.end();
+//   }
 
-  function saveAccount () {
-    req.user.givenName = req.body.givenName;
-    req.user.surname = req.body.surname;
-    req.user.email = req.body.email;
+//   function saveAccount () {
+//     req.user.givenName = req.body.givenName;
+//     req.user.surname = req.body.surname;
+//     req.user.email = req.body.email;
 
-    req.user.save(function (err) {
-      if (err) {
-        return writeError(err.userMessage || err.message);
-      }
-      res.end();
-    });
-  }
+//     req.user.save(function (err) {
+//       if (err) {
+//         return writeError(err.userMessage || err.message);
+//       }
+//       res.end();
+//     });
+//   }
 
-  if (req.body.password) {
-    var application = req.app.get('stormpathApplication');
+//   if (req.body.password) {
+//     var application = req.app.get('stormpathApplication');
 
-    application.authenticateAccount({
-      username: req.user.username,
-      password: req.body.existingPassword
-    }, function (err) {
-      if (err) {
-        return writeError('The existing password that you entered was incorrect.');
-      }
+//     application.authenticateAccount({
+//       username: req.user.username,
+//       password: req.body.existingPassword
+//     }, function (err) {
+//       if (err) {
+//         return writeError('The existing password that you entered was incorrect.');
+//       }
 
-      req.user.password = req.body.password;
+//       req.user.password = req.body.password;
 
-      saveAccount();
-    });
-  } else {
-    saveAccount();
-  }
-});
+//       saveAccount();
+//     });
+//   } else {
+//     saveAccount();
+//   }
+// });
 
 app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/css/bootstrap.min.css'));
