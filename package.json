@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack && node server.js"
+    "start": "webpack && node server.js",
     "dev": "webpack && nodemon --watch server.js server.js",
     "test": "jest",
     "coverage": "jest --coverage"
