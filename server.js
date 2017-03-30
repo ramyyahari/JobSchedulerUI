@@ -79,7 +79,7 @@ router.route('/comments')
   });
   })
   .post(function(req, res) {
-    console.log("Post api:"+req);
+ 
     var comment = new Comment();
     comment.title = req.body.title;
     comment.date = req.body.date;

@@ -78,7 +78,7 @@ export default class Header extends React.Component {
                   linkButton
                   containerElement={<Link to="/jobsubmission" />}
                   onTouchTap={ (e) => {this.handleClose();} } 
-                > Job submission</MenuItem>
+                > Job Submission</MenuItem>
                 <MenuItem
                   linkButton
                   containerElement={<Link to="/notebook" />}

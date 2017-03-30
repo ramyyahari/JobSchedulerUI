@@ -13,8 +13,9 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
 const style = {
-  marginLeft: 30,
-  marginTop: 30
+  bottom: 30,
+  right: 30,
+  position: 'fixed'
 };
 
 
@@ -54,6 +55,7 @@ export default class AddLog extends React.Component {
       content: this.state.content
       })
     });
+    window.location.reload(true);
   }
 
   handleChange(name, e) {
