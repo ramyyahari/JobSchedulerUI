@@ -60,7 +60,7 @@ export default class Header extends React.Component {
       <AppBar 
         title="Dhingra Lab"
         onTitleTouchTap={ (e) => {this.handleTouchTap();} }
-        style={{position: 'fixed', backgroundColor: 'indigo'}}
+        style={{position: 'fixed'}}
         iconElementLeft={ <FlatButton 
                           style={styles.button_margin}
                           onClick={ (e) => {this.handleToggle();} }
@@ -73,7 +73,7 @@ export default class Header extends React.Component {
                 open={this.state.open}
                 onRequestChange={(open) => this.setState({open})}
               > 
-                <AppBar showMenuIconButton={false} style={{backgroundColor: 'indigo'}}/>
+                <AppBar showMenuIconButton={false} />
                 <MenuItem 
                   linkButton
                   containerElement={<Link to="/jobsubmission" />}

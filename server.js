@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var config = require('./webpack.config');
 var express = require('express');
+var mongoose = require('mongoose');
 var stormpath = require('express-stormpath');
 var path = require('path');
 var bodyParser = require('body-parser');
@@ -9,7 +10,11 @@ var favicon = require('serve-favicon');
 var app = express();
 var compiler = webpack(config);
 var multer = require('multer');
-var request = require("request");
+var request = require('request');
+var router = express.Router();
+var Promise = require('bluebird');
+
+var Comment = require('./models/comments');
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -20,6 +25,8 @@ var storage = multer.diskStorage({
   }
 });
 var upload = multer({ storage: storage});
+
+app.use(bodyParser());
 
 app.use(favicon(__dirname+'/src/favicon.ico'));
 
@@ -48,13 +55,44 @@ app.get('/exec*', function (req,res) {
 });
 
 app.post('/upload', upload.single('photo'), function(req, res, next){
-  request("http://localhost:3000/me", function(error, response, body) {
-    console.log(response);
-  });  
   res.end();
 });
 
-// app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://localhost/dhingra_lab');
+
+//now we can set the route path & initialize the API
+router.get('/', function(req, res) {
+ res.json({ message: 'API Initialized!'});
+});
+
+
+router.use(bodyParser());
+
+//adding the /comments route to our /api router
+router.route('/comments')
+  .get(function(req, res) {
+    Comment.find(function(err, comments) {
+      if (err)
+        res.send(err);
+    res.json(comments)
+  });
+  })
+  .post(function(req, res) {
+    console.log("Post api:"+req);
+    var comment = new Comment();
+    comment.title = req.body.title;
+    comment.date = req.body.date;
+    comment.content = req.body.content;
+    comment.save(function(err) {
+      if (err)
+        res.send(err);
+      res.json({ message: 'Comment successfully added!' });
+    });
+  });
+
+app.use('/api', router);
+ // app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
 
 //   function writeError(message) {
 //     res.status(400);
