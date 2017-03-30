@@ -41,24 +41,19 @@ export default class AddLog extends React.Component {
 
     console.log(this.state);
 
-    superagent.post('/api/comments')
-      .send("asdfasdf").end();
-
     this.setState({open: false});
-    // fetch("/api/comments", {
-    //   method: "POST",
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify ({ 
-    //           title: this.state.title,
-    //           date: this.state.date,
-    //           content: this.state.content
-    //   })
-    // }).then((response) => {
-    //     console.log(response)
-    // })
+    fetch('/api/comments', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+      title: this.state.title,
+      date: this.state.date,
+      content: this.state.content
+      })
+    });
   }
 
   handleChange(name, e) {

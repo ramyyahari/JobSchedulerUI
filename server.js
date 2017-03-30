@@ -67,7 +67,7 @@ router.get('/', function(req, res) {
 });
 
 
-router.use(bodyParser());
+//router.use(bodyParser());
 
 //adding the /comments route to our /api router
 router.route('/comments')
