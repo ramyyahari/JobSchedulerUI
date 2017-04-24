@@ -15,6 +15,7 @@ var router = express.Router();
 var Promise = require('bluebird');
 
 var Comment = require('./models/comments');
+var currentUser = "invalid";
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -54,6 +55,17 @@ app.get('/exec*', function (req,res) {
   });
 });
 
+// app.get('/user', stormpath.getUser, function (req) {
+//   if (req.user) {
+//     console.log(req.user.email);
+//     res.send(req.user.email);
+//   } else {
+//     console.log('Invalid');
+//     res.send('Invalid');
+//   }
+//   currentUser = req.user.email;
+//});
+
 app.post('/upload', upload.single('photo'), function(req, res, next){
   res.end();
 });
@@ -79,11 +91,12 @@ router.route('/comments')
   });
   })
   .post(function(req, res) {
- 
+    console.log(currentUser);
     var comment = new Comment();
     comment.title = req.body.title;
     comment.date = req.body.date;
     comment.content = req.body.content;
+    comment.username = currentUser;
     comment.save(function(err) {
       if (err)
         res.send(err);
@@ -92,7 +105,15 @@ router.route('/comments')
   });
 
 app.use('/api', router);
- // app.post('/me', bodyParser.json(), stormpath.loginRequired, function (req, res) {
+
+// app.get('/me', bodyParser.json(), function (req, res) {
+//     res.send(req.user.username);
+
+// });
+ 
+// app.post('/me', bodyParser.json(), stormpath.authenticationRequired, function (req, res) {
+  
+//   console.log(req.body.email);
 
 //   function writeError(message) {
 //     res.status(400);
@@ -137,17 +158,26 @@ app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/css/bootstrap.min.css'));
 });
 
-app.get('*', function (req, res) {
+app.get('*', stormpath.getUser, function (req, res) {
+  currentUser = req.user.email;
+  //console.log(currentUser);
   res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
 app.on('stormpath.ready', function () {
 
   app.listen(3000, 'localhost', function (err) {
-    if (err) {
+    if(err) {
       return console.error(err);
     }
   console.log('Listening at http://localhost:3000'); 
   });
 });
 
+// app.use(stormpath.init(app, {
+//   postLoginHandler: function (account, req, res, next) {
+//     console.log('User:', account.email, 'just logged in!');
+//     next();
+
+//   }
+// }));

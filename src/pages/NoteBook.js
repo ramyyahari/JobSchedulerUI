@@ -13,8 +13,7 @@ export default class NoteBook extends React.Component {
 	constructor() {
      super();
      this.state = {
-    	array: [],
-    	temp: null
+    	array: []
        };
   	} 
 	
@@ -23,7 +22,7 @@ export default class NoteBook extends React.Component {
     		return response.json();
     	}).then(function(j) {
 			this.setState({array: j});
-			console.log(this.state.array);
+			//console.log(this.state.array);
 		}.bind(this))
 		.catch((e) => {
     		console.log(e);
@@ -36,13 +35,13 @@ export default class NoteBook extends React.Component {
   					<ListItem>
   						<Card>
     						<CardHeader
-      							title= "User"
+      							title= {x.username}
       							avatar= "https://goo.gl/ims56t" 
       						/>
       						<CardMedia 
       							overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
       							<img src="https://goo.gl/YFP8Sy" />
-    						</CardMedia>
+    						  </CardMedia>
       						<CardTitle title= {x.title} subtitle={x.date} />
     						<CardText>
     							{ x.content}

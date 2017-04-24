@@ -6,7 +6,7 @@ var CommentsSchema = new Schema({
 	title: String,
 	date: Date,
  	content: String,
- 	// username: String,
+ 	username: String,
  	// files: String 
 });
 

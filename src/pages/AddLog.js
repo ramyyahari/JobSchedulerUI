@@ -24,11 +24,18 @@ export default class AddLog extends React.Component {
      super();
      this.state = {
         open: false,
-        title:'',
-        date:null,
-        content: '' 
+        title: '',
+        date: null,
+        content: '',
+        username: '' 
        };
   } 
+
+  // componentDidMount() {
+  //   fetch('/user').then(function (res){
+  //         console.log(JSON.stringify(res.user.email));
+  //   });    
+  // }
 
   handleOpen = () => {
     this.setState({open: true});
@@ -40,9 +47,8 @@ export default class AddLog extends React.Component {
 
   handleSubmit = () => {
 
-    console.log(this.state);
-
     this.setState({open: false});
+    
     fetch('/api/comments', {
       method: 'POST',
       headers: {
@@ -52,7 +58,8 @@ export default class AddLog extends React.Component {
       body: JSON.stringify({
       title: this.state.title,
       date: this.state.date,
-      content: this.state.content
+      content: this.state.content,
+      username: this.state.username
       })
     });
     window.location.reload(true);
