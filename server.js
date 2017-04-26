@@ -55,17 +55,6 @@ app.get('/exec*', function (req,res) {
   });
 });
 
-// app.get('/user', stormpath.getUser, function (req) {
-//   if (req.user) {
-//     console.log(req.user.email);
-//     res.send(req.user.email);
-//   } else {
-//     console.log('Invalid');
-//     res.send('Invalid');
-//   }
-//   currentUser = req.user.email;
-//});
-
 app.post('/upload', upload.single('photo'), function(req, res, next){
   res.end();
 });
@@ -91,7 +80,6 @@ router.route('/comments')
   });
   })
   .post(function(req, res) {
-    console.log(currentUser);
     var comment = new Comment();
     comment.title = req.body.title;
     comment.date = req.body.date;
@@ -102,65 +90,27 @@ router.route('/comments')
         res.send(err);
       res.json({ message: 'Comment successfully added!' });
     });
+  })
+  .delete(function(req, res) {
+    console.log("content:"+JSON.stringify(req.body._id));
+    if(req.body.username ===  currentUser) {
+      Comment.findByIdAndRemove(req.body._id, function(err, comments) {
+        if (err)
+          res.send(err);
+        res.send(comments);
+        console.log(err+":"+comments);
+      });
+    }
   });
 
 app.use('/api', router);
-
-// app.get('/me', bodyParser.json(), function (req, res) {
-//     res.send(req.user.username);
-
-// });
- 
-// app.post('/me', bodyParser.json(), stormpath.authenticationRequired, function (req, res) {
-  
-//   console.log(req.body.email);
-
-//   function writeError(message) {
-//     res.status(400);
-//     res.json({ message: message, status: 400 });
-//     res.end();
-//   }
-
-//   function saveAccount () {
-//     req.user.givenName = req.body.givenName;
-//     req.user.surname = req.body.surname;
-//     req.user.email = req.body.email;
-
-//     req.user.save(function (err) {
-//       if (err) {
-//         return writeError(err.userMessage || err.message);
-//       }
-//       res.end();
-//     });
-//   }
-
-//   if (req.body.password) {
-//     var application = req.app.get('stormpathApplication');
-
-//     application.authenticateAccount({
-//       username: req.user.username,
-//       password: req.body.existingPassword
-//     }, function (err) {
-//       if (err) {
-//         return writeError('The existing password that you entered was incorrect.');
-//       }
-
-//       req.user.password = req.body.password;
-
-//       saveAccount();
-//     });
-//   } else {
-//     saveAccount();
-//   }
-// });
 
 app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/css/bootstrap.min.css'));
 });
 
 app.get('*', stormpath.getUser, function (req, res) {
-  currentUser = req.user.email;
-  //console.log(currentUser);
+  currentUser = req.user.username;
   res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
@@ -174,10 +124,3 @@ app.on('stormpath.ready', function () {
   });
 });
 
-// app.use(stormpath.init(app, {
-//   postLoginHandler: function (account, req, res, next) {
-//     console.log('User:', account.email, 'just logged in!');
-//     next();
-
-//   }
-// }));
