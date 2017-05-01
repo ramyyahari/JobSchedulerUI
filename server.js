@@ -76,7 +76,7 @@ router.route('/comments')
     Comment.find(function(err, comments) {
       if (err)
         res.send(err);
-    res.json(comments)
+    res.json(comments);
   });
   })
   .post(function(req, res) {
@@ -85,6 +85,8 @@ router.route('/comments')
     comment.date = req.body.date;
     comment.content = req.body.content;
     comment.username = currentUser;
+    comment.files = req.body.filename;
+    console.log(comment.filename);
     comment.save(function(err) {
       if (err)
         res.send(err);

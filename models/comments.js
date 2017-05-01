@@ -7,7 +7,7 @@ var CommentsSchema = new Schema({
 	date: Date,
  	content: String,
  	username: String,
- 	// files: String 
+ 	files: String 
 });
 
 var Comment = mongoose.model('Comment', CommentsSchema);

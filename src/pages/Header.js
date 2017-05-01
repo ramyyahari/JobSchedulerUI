@@ -58,7 +58,7 @@ export default class Header extends React.Component {
       <div>
        
       <AppBar 
-        title="Dhingra Lab"
+        title="WSU Genomics Lab"
         onTitleTouchTap={ (e) => {this.handleTouchTap();} }
         style={{position: 'fixed'}}
         iconElementLeft={ <FlatButton 

@@ -5,6 +5,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Card, CardHeader, CardMedia, CardTitle , CardText, CardActions} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import {List, ListItem} from 'material-ui/List';
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
 
 import TextField from 'material-ui/TextField';
 import { IconButton } from 'material-ui';
@@ -27,7 +29,7 @@ export default class NoteBook extends React.Component {
     		return response.json();
     	}).then(function(j) {
 			this.setState({array: j});
-			//console.log(this.state.array);
+			console.log("Content:"+j);
 		}.bind(this))
 		.catch((e) => {
     		console.log(e);
@@ -53,6 +55,7 @@ export default class NoteBook extends React.Component {
       username: name
       })
     });
+    window.location.reload(true);
   }
 
   	render() {
@@ -69,16 +72,19 @@ export default class NoteBook extends React.Component {
                     title= {x.username}
                     avatar= "https://goo.gl/ims56t" 
                   />
-                  <CardMedia 
-                    overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}>
-                    <img src="https://goo.gl/YFP8Sy" />
-                  </CardMedia>
                   <CardTitle title= {x.title} subtitle={x.date} />
                 <CardText>
                   { x.content}
                 </CardText>
                 <CardActions>
                     <FlatButton label="Delete" onTouchTap={ (e) => this.handleDelete(x._id, x.username) }/>
+                </CardActions>
+                <CardActions>
+                  <SelectField
+                    floatingLabelText="Frequency"
+                  >
+                    {x.files}
+                  </SelectField>
                 </CardActions>
               </Card>
             </ListItem>
