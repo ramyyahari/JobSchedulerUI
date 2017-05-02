@@ -7,9 +7,10 @@ import FlatButton from 'material-ui/FlatButton';
 import {List, ListItem} from 'material-ui/List';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
 
+import FileFileDownload from 'material-ui/svg-icons/file/file-download';
 import TextField from 'material-ui/TextField';
-import { IconButton } from 'material-ui';
 import Search from 'material-ui/svg-icons/action/search';
 
 import { AddLog } from './';
@@ -54,7 +55,9 @@ export default class NoteBook extends React.Component {
       _id: data,
       username: name
       })
-    });
+    }).catch((e) => {
+        console.log(e);
+    });    
     window.location.reload(true);
   }
 
@@ -78,12 +81,10 @@ export default class NoteBook extends React.Component {
                 </CardText>
                 <CardActions>
                     <FlatButton label="Delete" onTouchTap={ (e) => this.handleDelete(x._id, x.username) }/>
-                </CardActions>
-                <CardActions>
                   <SelectField
-                    floatingLabelText="Frequency"
+                    floatingLabelText="Download"
                   >
-                    {x.files}
+                    {x.filename}
                   </SelectField>
                 </CardActions>
               </Card>
