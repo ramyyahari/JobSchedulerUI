@@ -4,3 +4,4 @@ stormpath.yml
 app.js
 coverage/
 travis.log
+uploads/
