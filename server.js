@@ -95,15 +95,15 @@ router.route('/comments')
     });
   })
   .delete(function(req, res) {
-    console.log("content:"+JSON.stringify(req.body._id));
-    if(req.body.username ===  currentUser) {
+    console.log(req.body.email +"plplpl"+ currentUser);
+    //if(req.body.email ==  currentUser) {
       Comment.findByIdAndRemove(req.body._id, function(err, comments) {
         if (err)
           res.send(err);
         res.send(comments);
-        console.log(err+":"+comments);
+       // console.log(err+":"+comments);
       });
-    }
+    //} 
   });
 
 app.use('/api', router);
@@ -135,4 +135,3 @@ app.on('stormpath.ready', function () {
   console.log('Listening at http://localhost:3000'); 
   });
 });
-

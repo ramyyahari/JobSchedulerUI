@@ -27,7 +27,6 @@ export default class AddLog extends React.Component {
         title: '',
         date: null,
         content: '',
-        username: '',
         filename: [] 
        };
   } 
@@ -60,7 +59,6 @@ export default class AddLog extends React.Component {
       title: this.state.title,
       date: this.state.date,
       content: this.state.content,
-      username: this.state.username,
       filename: this.state.filename
       })
     });
@@ -133,6 +131,7 @@ export default class AddLog extends React.Component {
               value={this.state.title}
               onChange={this.handleChange.bind(this, 'title')}
               style= {{width: '100%', margin: 'auto' }}
+              errorText="This field is required."
               hintText="Title"
             />
             <DatePicker 

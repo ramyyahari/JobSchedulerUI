@@ -17,6 +17,11 @@ export default class Toggle extends React.Component {
     var change = {};
     change[name] = e.target.value;
     this.setState(change);
+    fetch("/exec?command="+this.state.content)
+      .then((response) => {
+      return response.json();
+      }).then((data) => {
+    });
     console.log("in toggle "+e.target.value);
   }
 
