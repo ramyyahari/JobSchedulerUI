@@ -32,6 +32,7 @@ export default class NoteBook extends React.Component {
 		.catch((e) => {
     		console.log(e);
     	});    
+
 	}
 
   updateContent( e ) {
@@ -53,6 +54,7 @@ export default class NoteBook extends React.Component {
       username: name
       })
     });
+    window.location.reload(true);
   }
 
   	render() {
@@ -76,8 +78,11 @@ export default class NoteBook extends React.Component {
                   <CardTitle title= {x.title} subtitle={x.date} />
                 <CardText>
                   { x.content}
+                  <br/>
+                  {x.files}
                 </CardText>
                 <CardActions>
+                    <FlatButton label="Download files"/>
                     <FlatButton label="Delete" onTouchTap={ (e) => this.handleDelete(x._id, x.username) }/>
                 </CardActions>
               </Card>

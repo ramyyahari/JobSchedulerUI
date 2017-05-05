@@ -104,9 +104,7 @@ export default class Header extends React.Component {
               </Link>
             </MenuItem>
             <MenuItem>
-                  <FlatButton>
-                    <LogoutLink />
-                  </FlatButton>
+                   <LogoutLink />
               </MenuItem>
             </IconMenu>
           </Authenticated>    

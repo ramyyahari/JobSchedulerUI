@@ -60,7 +60,7 @@ app.post('/upload', upload.single('photo'), function(req, res, next){
 });
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/dhingra_lab');
+mongoose.connect('mongodb://localhost/dhingralab');
 
 //now we can set the route path & initialize the API
 router.get('/', function(req, res) {
@@ -76,8 +76,10 @@ router.route('/comments')
     Comment.find(function(err, comments) {
       if (err)
         res.send(err);
-    res.json(comments)
+    //console.log(comments);
+    res.json(comments);    
   });
+
   })
   .post(function(req, res) {
     var comment = new Comment();
@@ -85,6 +87,7 @@ router.route('/comments')
     comment.date = req.body.date;
     comment.content = req.body.content;
     comment.username = currentUser;
+    comment.files = req.body.filename;
     comment.save(function(err) {
       if (err)
         res.send(err);
@@ -110,13 +113,22 @@ app.get('/css/bootstrap.min.css', function (req, res) {
 });
 
 app.get('*', stormpath.getUser, function (req, res) {
+  if(req.user) {
   currentUser = req.user.username;
+  } else {
+    currentUser = "Guest";
+  }
+  console.log(currentUser);
   res.sendFile(path.join(__dirname, 'build/index.html'));
 });
+// app.get('*', function (req, res) {
+//   currentUser = req.user.email;
+//   res.sendFile(path.join(__dirname, 'build/index.html'));
+//});
 
 app.on('stormpath.ready', function () {
 
-  app.listen(3000, 'localhost', function (err) {
+  app.listen( 3000, 'localhost', function (err) {
     if(err) {
       return console.error(err);
     }

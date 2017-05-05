@@ -27,14 +27,15 @@ export default class AddLog extends React.Component {
         title: '',
         date: null,
         content: '',
-        username: '' 
+        username: '',
+        filename: [] 
        };
   } 
 
   // componentDidMount() {
-  //   fetch('/user').then(function (res){
-  //         console.log(JSON.stringify(res.user.email));
-  //   });    
+  //   fetch('*').then(function(response){
+  //     console.log( response.json());
+  //   }); 
   // }
 
   handleOpen = () => {
@@ -59,7 +60,8 @@ export default class AddLog extends React.Component {
       title: this.state.title,
       date: this.state.date,
       content: this.state.content,
-      username: this.state.username
+      username: this.state.username,
+      filename: this.state.filename
       })
     });
     window.location.reload(true);
@@ -83,10 +85,16 @@ export default class AddLog extends React.Component {
    
     var formData = new FormData();
         formData.append('photo', file[0]);
+
+    var temp = this.state.filename.slice();
+    temp.push( formData.get('photo')['name']);
+    this.setState({ filename: temp });
         
     if( formData.get('photo')['type'].includes("application/vnd.openxmlformats-officedocument.wordprocessingml.document") === false
-          && formData.get('photo')['type'].includes("application/pdf") === false
-     ) {
+      && formData.get('photo')['type'].includes("application/pdf") === false
+      && formData.get('photo')['type'].includes("image/") === false
+      && formData.get('photo')['type'].includes("text/") === false
+    ) {
       this.setState({open: true});
     } else{
          superagent.post('/upload')
