@@ -76,12 +76,13 @@ router.route('/comments')
     Comment.find(function(err, comments) {
       if (err)
         res.send(err);
-    //console.log(comments);
+    console.log(comments);
     res.json(comments);    
   });
 
   })
   .post(function(req, res) {
+    console.log(req.body.content);
     var comment = new Comment();
     comment.title = req.body.title;
     comment.date = req.body.date;
@@ -95,15 +96,11 @@ router.route('/comments')
     });
   })
   .delete(function(req, res) {
-    console.log(req.body.email +"plplpl"+ currentUser);
-    //if(req.body.email ==  currentUser) {
-      Comment.findByIdAndRemove(req.body._id, function(err, comments) {
+    //if(req.body.username ==  currentUser) {
+      Comment.findByIdAndUpdate(req.body._id, {content: req.body.content}, function(err, comments) {
         if (err)
-          res.send(err);
-        res.send(comments);
-       // console.log(err+":"+comments);
+          console.log(err);
       });
-    //} 
   });
 
 app.use('/api', router);
@@ -121,10 +118,6 @@ app.get('*', stormpath.getUser, function (req, res) {
   console.log(currentUser);
   res.sendFile(path.join(__dirname, 'build/index.html'));
 });
-// app.get('*', function (req, res) {
-//   currentUser = req.user.email;
-//   res.sendFile(path.join(__dirname, 'build/index.html'));
-//});
 
 app.on('stormpath.ready', function () {
 

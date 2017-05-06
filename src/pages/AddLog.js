@@ -48,8 +48,7 @@ export default class AddLog extends React.Component {
   handleSubmit = () => {
 
     this.setState({open: false});
-    
-    fetch('/api/comments', {
+     fetch('/api/comments', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -84,8 +83,7 @@ export default class AddLog extends React.Component {
     var formData = new FormData();
         formData.append('photo', file[0]);
 
-    var temp = this.state.filename.slice();
-    temp.push( formData.get('photo')['name']);
+    this.state.filename.push( formData.get('photo')['name']);
     this.setState({ filename: temp });
         
     if( formData.get('photo')['type'].includes("application/vnd.openxmlformats-officedocument.wordprocessingml.document") === false

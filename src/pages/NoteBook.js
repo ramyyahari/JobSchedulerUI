@@ -8,6 +8,7 @@ import {List, ListItem} from 'material-ui/List';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
 
 import FileFileDownload from 'material-ui/svg-icons/file/file-download';
 import TextField from 'material-ui/TextField';
@@ -22,6 +23,8 @@ export default class NoteBook extends React.Component {
      this.state = {
     	array: [],
       content: '',
+      updateValue: '',
+      selectedFileValue: 1
     };
   } 
 	
@@ -30,7 +33,7 @@ export default class NoteBook extends React.Component {
     		return response.json();
     	}).then(function(j) {
 			this.setState({array: j});
-			console.log("Content:"+j);
+			//console.log("Content:"+j);
 		}.bind(this))
 		.catch((e) => {
     		console.log(e);
@@ -45,6 +48,17 @@ export default class NoteBook extends React.Component {
     })
   }
 
+  handleFileChange(event, index, value) {
+    this.setState({
+      selectedFileValue: value
+    });
+  }
+
+
+  handleChange(e) {
+    this.setState({ updateValue: e.target.value});
+  }
+
   handleDelete( data, name ) {
     fetch('/api/comments', {
       method: 'DELETE',
@@ -54,7 +68,7 @@ export default class NoteBook extends React.Component {
       },
       body: JSON.stringify({
       _id: data,
-      username: name
+      content: name+"\nUpdates: "+this.state.updateValue
       })
     }).catch((e) => {
         console.log(e);
@@ -62,13 +76,17 @@ export default class NoteBook extends React.Component {
     window.location.reload(true);
   }
 
-  	render() {
-      const holder = this.state.array
-        .filter( x => {
-          var concatPost = (x.title + " " + x.content + " " + x.username).toLowerCase();      
+  render() {
+    
+    const holder = this.state.array
+      .filter( x => {
+        var concatPost = (x.title + " " + x.content + " " + x.username).toLowerCase();      
           return  concatPost.indexOf(this.state.content) >=0 
         })
         .map( (x) => {
+          var t = x.files.map((filename, index) =>
+                        <MenuItem key={index} value={index} primaryText={filename} />
+                      );
           return(
             <ListItem key = {x._id}>
               <Card>
@@ -77,20 +95,29 @@ export default class NoteBook extends React.Component {
                     avatar= "https://goo.gl/ims56t" 
                   />
                   <CardTitle title= {x.title} subtitle={x.date} />
-                <CardText>
+                <CardText style={{ whiteSpace: 'pre-wrap'}}>
                   { x.content}
-                  <br/>
-                  {x.files}
                 </CardText>
                 <CardActions>
-                    <FlatButton label="Download files"/>
-                    <FlatButton label="Delete" onTouchTap={ (e) => this.handleDelete(x._id, x.username) }/>
-                  <SelectField
-                    floatingLabelText="Download"
-                  >
-                    {x.filename}
-                  </SelectField>
-                </CardActions>
+                  <TextField
+                    value= {this.state.updateValue}
+                    onChange={this.handleChange.bind(this)}
+                    floatingLabelText="Click here to update content"
+                    floatingLabelFocusStyle={{ color: '#2196f3' }}
+                    style={{ fill: '#eeeeee' }}
+                    fullWidth
+                    multiLine
+                  />
+                  <br />
+                  <IconMenu
+                    iconButtonElement={<IconButton> <FileFileDownload /> </IconButton>}
+                    value={this.state.selectedFileValue}
+                    onChange={this.handleFileChange}>
+                      {t}
+                  </IconMenu>
+                   <FlatButton label="Update" style={{ float: 'right'}} onTouchTap={ (e) => this.handleDelete(x._id, x.content) }/>
+                 
+                  </CardActions>
               </Card>
             </ListItem>
           )
