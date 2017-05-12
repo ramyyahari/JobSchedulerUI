@@ -5,7 +5,14 @@ import Button from 'muicss/lib/react/button';
 import Input from 'muicss/lib/react/input';
 
 export default class LoginPage extends React.Component {
- handleChange(name, e) {
+ constructor() {
+    super();
+    this.state = {
+      email: '',
+      password: ''
+    }
+  }
+  handleChange(name, e) {
     var change = {};
     change[name] = e.target.value;
     this.setState(change);

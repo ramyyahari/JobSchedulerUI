@@ -2,7 +2,6 @@ var webpack = require('webpack');
 var config = require('./webpack.config');
 var express = require('express');
 var mongoose = require('mongoose');
-var stormpath = require('express-stormpath');
 var path = require('path');
 var bodyParser = require('body-parser');
 var exec = require('child_process').exec;
@@ -36,11 +35,6 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
-app.use(stormpath.init(app, {
-  web: {
-    produces: ['application/json']
-  }
-}));
 
 app.get('/exec*', function (req,res) {
   console.log("Execute ls"+ req.user);
@@ -78,13 +72,12 @@ router.route('/users')
   })
   .post(function(req, res) {
     console.log(req.body.content);
-    var comment = new Comment();
-    comment.title = req.body.title;
-    comment.date = req.body.date;
-    comment.content = req.body.content;
-    comment.username = currentUser;
-    comment.files = req.body.filename;
-    comment.save(function(err) {
+    var user = new User();
+    user.firstName = req.body.firstName;
+    user.lastName = req.body.lastName;
+    user.email = req.body.email;
+    user.password = req.body.password;
+    user.save(function(err) {
       if (err)
         res.send(err);
       res.json({ message: 'User successfully added!' });
@@ -134,7 +127,6 @@ app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
-app.on('stormpath.ready', function () {
 
   app.listen( 3000, 'localhost', function (err) {
     if(err) {
@@ -142,4 +134,3 @@ app.on('stormpath.ready', function () {
     }
   console.log('Listening at http://localhost:3000'); 
   });
-});

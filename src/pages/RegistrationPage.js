@@ -24,7 +24,7 @@ export default class RegistrationPage extends React.Component {
 
   handleSubmit = () => {
 
-     fetch('/api/user', {
+     fetch('/api/users', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
