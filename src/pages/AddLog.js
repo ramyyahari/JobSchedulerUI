@@ -11,13 +11,16 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-
+import CircularProgress from 'material-ui/CircularProgress';
 const style = {
   bottom: 30,
   right: 30,
   position: 'fixed'
 };
 
+const styles = {
+  marginLeft: '40%',
+};
 
 export default class AddLog extends React.Component {
   constructor() {
@@ -27,7 +30,8 @@ export default class AddLog extends React.Component {
         title: '',
         date: null,
         content: '',
-        filename: [] 
+        filename: [],
+        showProgress: false 
        };
   } 
 
@@ -73,17 +77,21 @@ export default class AddLog extends React.Component {
   setDate(value) {
     this.setState({date: value});
   }
+
   openFileDialog() {
     var fileUploadDom = React.findDOMNode(this.refs.fileUpload);
     fileUploadDom.click();
   }
 
   onDrop(file) {
+    
+    this.setState({showProgress: true});
    
     var formData = new FormData();
         formData.append('photo', file[0]);
 
-    this.state.filename.push( formData.get('photo')['name']);
+    var temp = this.state.filename.slice();    
+    temp.push( formData.get('photo')['name']);
     this.setState({ filename: temp });
         
     if( formData.get('photo')['type'].includes("application/vnd.openxmlformats-officedocument.wordprocessingml.document") === false
@@ -95,10 +103,14 @@ export default class AddLog extends React.Component {
     } else{
          superagent.post('/upload')
           .send(formData)
+          .on('progress', function(e) {
+            console.log('Percentage done: ', e.percent);
+          })
           .end(function(err, resp) {
             if (err) { console.error(err); }
               return resp;
           });
+         // this.setState({showProgress: false});
     }
 }
   render() {
@@ -136,6 +148,7 @@ export default class AddLog extends React.Component {
               value={this.state.date}
               onChange={(event, x) => {this.setDate(x);}}
               hintText="Select date" />
+              { this.state.showProgress ?  <CircularProgress size={80} thickness={5} style={styles}/> : null }
             <TextField
               multiLine={true}
               value={this.state.content}

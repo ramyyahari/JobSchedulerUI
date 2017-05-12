@@ -84,9 +84,9 @@ export default class NoteBook extends React.Component {
           return  concatPost.indexOf(this.state.content) >=0 
         })
         .map( (x) => {
-          var t = x.files.map((filename, index) =>
-                        <MenuItem key={index} value={index} primaryText={filename} />
-                      );
+          // var t = x.files.map((filename, index) =>
+          //               <MenuItem key={index} value={index} primaryText={filename} />
+          //             );
           return(
             <ListItem key = {x._id}>
               <Card>
@@ -113,7 +113,6 @@ export default class NoteBook extends React.Component {
                     iconButtonElement={<IconButton> <FileFileDownload /> </IconButton>}
                     value={this.state.selectedFileValue}
                     onChange={this.handleFileChange}>
-                      {t}
                   </IconMenu>
                    <FlatButton label="Update" style={{ float: 'right'}} onTouchTap={ (e) => this.handleDelete(x._id, x.content) }/>
                  

@@ -15,6 +15,7 @@ var router = express.Router();
 var Promise = require('bluebird');
 
 var Comment = require('./models/comments');
+var User = require('./models/users');
 var currentUser = "invalid";
 
 var storage = multer.diskStorage({
@@ -27,8 +28,7 @@ var storage = multer.diskStorage({
 });
 var upload = multer({ storage: storage});
 
-app.use(bodyParser());
-
+app.use(bodyParser({limit: '200mb'}));
 app.use(favicon(__dirname+'/src/favicon.ico'));
 
 app.use(require('webpack-dev-middleware')(compiler, {
@@ -67,19 +67,40 @@ router.get('/', function(req, res) {
  res.json({ message: 'API Initialized!'});
 });
 
-
-//router.use(bodyParser());
-
-//adding the /comments route to our /api router
-router.route('/comments')
+router.route('/users')
   .get(function(req, res) {
     Comment.find(function(err, comments) {
       if (err)
         res.send(err);
     console.log(comments);
     res.json(comments);    
-  });
+    });
+  })
+  .post(function(req, res) {
+    console.log(req.body.content);
+    var comment = new Comment();
+    comment.title = req.body.title;
+    comment.date = req.body.date;
+    comment.content = req.body.content;
+    comment.username = currentUser;
+    comment.files = req.body.filename;
+    comment.save(function(err) {
+      if (err)
+        res.send(err);
+      res.json({ message: 'User successfully added!' });
+    });
+  })
+//router.use(bodyParser());
 
+//adding the /comments route to our /api router
+router.route('/comments')
+  .get(function(req, res) {
+    Comment.findById(function(err, comments) {
+      if (err)
+        res.send(err);
+    console.log(comments);
+    res.json(comments);    
+    });
   })
   .post(function(req, res) {
     console.log(req.body.content);
@@ -109,13 +130,7 @@ app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/css/bootstrap.min.css'));
 });
 
-app.get('*', stormpath.getUser, function (req, res) {
-  if(req.user) {
-  currentUser = req.user.username;
-  } else {
-    currentUser = "Guest";
-  }
-  console.log(currentUser);
+app.get('*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/index.html'));
 });
 
