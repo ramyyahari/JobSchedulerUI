@@ -3,6 +3,7 @@ import DocumentTitle from 'react-document-title';
 import { Link } from 'react-router';
 import Button from 'muicss/lib/react/button';
 import Input from 'muicss/lib/react/input';
+import {browserHistory} from 'react-router';
 
 export default class LoginPage extends React.Component {
  constructor() {
@@ -20,7 +21,7 @@ export default class LoginPage extends React.Component {
 
   handleSubmit = () => {
 
-     fetch('/api/user', {
+     fetch('/api/users', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',

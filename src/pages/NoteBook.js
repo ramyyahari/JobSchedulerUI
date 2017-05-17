@@ -9,11 +9,12 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import IconMenu from 'material-ui/IconMenu';
-
+import Option from 'muicss/lib/react/option';
 import FileFileDownload from 'material-ui/svg-icons/file/file-download';
 import TextField from 'material-ui/TextField';
 import Search from 'material-ui/svg-icons/action/search';
-
+import Dropdown from 'muicss/lib/react/dropdown';
+import DropdownItem from 'muicss/lib/react/dropdown-item';
 import { AddLog } from './';
 
 export default class NoteBook extends React.Component {
@@ -24,20 +25,20 @@ export default class NoteBook extends React.Component {
     	array: [],
       content: '',
       updateValue: '',
-      selectedFileValue: 1
+      selectedFileValue: '',
+      fileName: []
     };
   } 
 	
 	componentDidMount() {
 		fetch('/api/comments').then(function(response){
     		return response.json();
-    	}).then(function(j) {
+    }).then(function(j) {
 			this.setState({array: j});
-			//console.log("Content:"+j);
 		}.bind(this))
 		.catch((e) => {
-    		console.log(e);
-    	});    
+    	console.log(e);
+    });    
 
 	}
 
@@ -45,13 +46,15 @@ export default class NoteBook extends React.Component {
     var lowerCase = e.target.value;
     this.setState({
       content: lowerCase.toLowerCase()
-    })
+    });
   }
 
-  handleFileChange(event, index, value) {
+  handleFileChange(e) {
+   
     this.setState({
-      selectedFileValue: value
+      selectedFileValue: e.target.label
     });
+    console.log(this.state.selectedFileValue);
   }
 
 
@@ -76,6 +79,7 @@ export default class NoteBook extends React.Component {
     window.location.reload(true);
   }
 
+
   render() {
     
     const holder = this.state.array
@@ -84,9 +88,8 @@ export default class NoteBook extends React.Component {
           return  concatPost.indexOf(this.state.content) >=0 
         })
         .map( (x) => {
-          // var t = x.files.map((filename, index) =>
-          //               <MenuItem key={index} value={index} primaryText={filename} />
-          //             );
+          let temp = x.files.split(",");
+
           return(
             <ListItem key = {x._id}>
               <Card>
@@ -94,9 +97,9 @@ export default class NoteBook extends React.Component {
                     title= {x.username}
                     avatar= "https://goo.gl/ims56t" 
                   />
-                  <CardTitle title= {x.title} subtitle={x.date} />
+                  <CardTitle title={x.title} subtitle={x.date} />
                 <CardText style={{ whiteSpace: 'pre-wrap'}}>
-                  { x.content}
+                  {x.content}
                 </CardText>
                 <CardActions>
                   <TextField
@@ -109,11 +112,11 @@ export default class NoteBook extends React.Component {
                     multiLine
                   />
                   <br />
-                  <IconMenu
-                    iconButtonElement={<IconButton> <FileFileDownload /> </IconButton>}
-                    value={this.state.selectedFileValue}
-                    onChange={this.handleFileChange}>
-                  </IconMenu>
+                  <Dropdown onClick={this.handleFileChange.bind(this)} >
+                      {temp.map((name, index) =>
+                        <DropdownItem label={name}>{name}</DropdownItem>
+                      )}
+                  </Dropdown>
                    <FlatButton label="Update" style={{ float: 'right'}} onTouchTap={ (e) => this.handleDelete(x._id, x.content) }/>
                  
                   </CardActions>

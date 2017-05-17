@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import { LoginLink, LogoutLink, Authenticated, NotAuthenticated } from 'react-stormpath';
 import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
@@ -66,53 +65,40 @@ export default class Header extends React.Component {
                           onClick={ (e) => {this.handleToggle();} }
                           icon={<Menu color={fullWhite}/>} /> }
         >
-          <Authenticated>            
-              <Drawer 
-                docked={false}
-                width={200} 
-                open={this.state.open}
-                onRequestChange={(open) => this.setState({open})}
-              > 
-                <AppBar showMenuIconButton={false} />
-                <MenuItem 
-                  linkButton
-                  containerElement={<Link to="/jobsubmission" />}
-                  onTouchTap={ (e) => {this.handleClose();} } 
-                > Job Submission</MenuItem>
-                <MenuItem
-                  linkButton
-                  containerElement={<Link to="/notebook" />}
-                  onTouchTap={ (e) => {this.handleClose();} }
-                >Lab Notebooks</MenuItem>
-                <MenuItem
-                  linkButton
-                  containerElement={<Link to="/" />}
-                  onTouchTap={ (e) => {this.handleClose();} }
-                >Add Job Forms</MenuItem>
-              </Drawer>
-          </Authenticated>
-          <Authenticated>
+          <Drawer 
+            docked={false}
+            width={200} 
+            open={this.state.open}
+            onRequestChange={(open) => this.setState({open})}
+          > 
+          <AppBar showMenuIconButton={false} />
+            <MenuItem 
+              linkButton
+              containerElement={<Link to="/jobsubmission" />}
+              onTouchTap={ (e) => {this.handleClose();} } 
+            > Job Submission</MenuItem>
+            <MenuItem
+              linkButton
+              containerElement={<Link to="/notebook" />}
+              onTouchTap={ (e) => {this.handleClose();} }
+            >Lab Notebooks</MenuItem>
+            <MenuItem
+              linkButton
+              containerElement={<Link to="/" />}
+              onTouchTap={ (e) => {this.handleClose();} }
+              >Add Job Forms</MenuItem>
+          </Drawer>
            
-            <IconMenu
-              iconButtonElement={<IconButton style={styles.button_margin}><AccountCircle color={fullWhite}/></IconButton>}
-              anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-              targetOrigin={{horizontal: 'left', vertical: 'top'}}
-            >
-            <MenuItem>
-              <Link to="/profile">
-                 <FlatButton primary={true}>Profile</FlatButton>               
-              </Link>
-            </MenuItem>
-            <MenuItem>
-                   <LogoutLink />
-              </MenuItem>
-            </IconMenu>
-          </Authenticated>    
-          <NotAuthenticated>
-            <Link to="/login">
-              <FlatButton label="Login" labelStyle={styles.text_format} style={styles.button_margin} />
+          <IconMenu
+            iconButtonElement={<IconButton style={styles.button_margin}><AccountCircle color={fullWhite}/></IconButton>}
+            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+            targetOrigin={{horizontal: 'left', vertical: 'top'}}
+          >
+             <Link to="/login">
+              <FlatButton label="Login" primary={true} labelStyle={styles.text_format} style={styles.button_margin} />
             </Link>
-          </NotAuthenticated>
+          </IconMenu>
+           
        </AppBar>            
       </div>
     </MuiThemeProvider>     

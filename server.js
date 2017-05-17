@@ -56,6 +56,7 @@ app.post('/upload', upload.single('photo'), function(req, res, next){
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/dhingralab');
 
+app.use('/api', router);
 //now we can set the route path & initialize the API
 router.get('/', function(req, res) {
  res.json({ message: 'API Initialized!'});
@@ -63,32 +64,47 @@ router.get('/', function(req, res) {
 
 router.route('/users')
   .get(function(req, res) {
-    Comment.find(function(err, comments) {
+    User.findOne( {email: req.email}, function(err, user) {
       if (err)
         res.send(err);
-    console.log(comments);
-    res.json(comments);    
+      if( user.password === req.password) {
+        
+        currentUser = req.email;
+      }
+      res.send('success');    
     });
   })
   .post(function(req, res) {
-    console.log(req.body.content);
-    var user = new User();
-    user.firstName = req.body.firstName;
-    user.lastName = req.body.lastName;
-    user.email = req.body.email;
-    user.password = req.body.password;
-    user.save(function(err) {
+    console.log(req.body.email);
+    
+    User.findOne( {email: req.body.email}, function(err, user) {
       if (err)
         res.send(err);
-      res.json({ message: 'User successfully added!' });
-    });
-  })
+      console.log(user);
+      if(user) {
+         res.send(false);
+      } else {
+        var user = new User();
+        user.firstName = req.body.firstName;
+        user.lastName = req.body.lastName;
+        user.email = req.body.email;
+        user.password = req.body.password;
+        user.save(function(err) {
+          if (err){
+            console.log(err);
+            res.send(err);
+          }
+          res.send(true);
+        });    
+      }    
+    });  
+  });
 //router.use(bodyParser());
 
 //adding the /comments route to our /api router
 router.route('/comments')
   .get(function(req, res) {
-    Comment.findById(function(err, comments) {
+    Comment.find(function(err, comments) {
       if (err)
         res.send(err);
     console.log(comments);
@@ -117,7 +133,6 @@ router.route('/comments')
       });
   });
 
-app.use('/api', router);
 
 app.get('/css/bootstrap.min.css', function (req, res) {
   res.sendFile(path.join(__dirname, 'build/css/bootstrap.min.css'));
@@ -132,5 +147,5 @@ app.get('*', function (req, res) {
     if(err) {
       return console.error(err);
     }
-  console.log('Listening at http://localhost:3000'); 
+    console.log('Listening at http://localhost:3000'); 
   });

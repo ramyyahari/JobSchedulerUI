@@ -36,7 +36,11 @@ export default class RegistrationPage extends React.Component {
           email: this.state.email,
           password: this.state.password
       })
-    });
+    }).then((response) => {
+      console.log(response);
+    }).catch((e) => {
+        console.log(e);
+    }); 
      browserHistory.push('/login');
   }
 
