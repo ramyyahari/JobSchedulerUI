@@ -13,8 +13,7 @@ import Option from 'muicss/lib/react/option';
 import FileFileDownload from 'material-ui/svg-icons/file/file-download';
 import TextField from 'material-ui/TextField';
 import Search from 'material-ui/svg-icons/action/search';
-import Dropdown from 'muicss/lib/react/dropdown';
-import DropdownItem from 'muicss/lib/react/dropdown-item';
+
 import { AddLog } from './';
 
 export default class NoteBook extends React.Component {
@@ -25,8 +24,7 @@ export default class NoteBook extends React.Component {
     	array: [],
       content: '',
       updateValue: '',
-      selectedFileValue: '',
-      fileName: []
+      selectedFileValue: null,
     };
   } 
 	
@@ -49,12 +47,19 @@ export default class NoteBook extends React.Component {
     });
   }
 
-  handleFileChange(e) {
-   
+  handleFileChange(value) {
+   //console.log(value);
     this.setState({
-      selectedFileValue: e.target.label
+      selectedFileValue: value
     });
-    console.log(this.state.selectedFileValue);
+    fetch("/download?filename="+value)
+      .then((response) => {
+        return response.blob;
+      }).then((blob) => {
+        console.log(blob);
+      }).catch((e) => {
+          console.log(e);
+    });
   }
 
 
@@ -112,11 +117,14 @@ export default class NoteBook extends React.Component {
                     multiLine
                   />
                   <br />
-                  <Dropdown onClick={this.handleFileChange.bind(this)} >
+                  <IconMenu
+                    iconButtonElement={<IconButton> <FileFileDownload /> </IconButton>}
+                    value={this.state.selectedFileValue}
+                    >
                       {temp.map((name, index) =>
-                        <DropdownItem label={name}>{name}</DropdownItem>
+                        <MenuItem onClick={e => {this.handleFileChange(name);} } key={index} value={name}  primaryText={name} />
                       )}
-                  </Dropdown>
+                  </IconMenu>
                    <FlatButton label="Update" style={{ float: 'right'}} onTouchTap={ (e) => this.handleDelete(x._id, x.content) }/>
                  
                   </CardActions>

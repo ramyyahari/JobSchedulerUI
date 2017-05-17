@@ -49,6 +49,11 @@ app.get('/exec*', function (req,res) {
   });
 });
 
+app.get('/downloadfile*', function (req,res) {
+  res.download(path.join(__dirname+'/uploads/'+ req.query['filename']), req.query['filename']);
+});
+
+
 app.post('/upload', upload.single('photo'), function(req, res, next){
   res.end();
 });
@@ -107,7 +112,7 @@ router.route('/comments')
     Comment.find(function(err, comments) {
       if (err)
         res.send(err);
-    console.log(comments);
+    //console.log(comments);
     res.json(comments);    
     });
   })
