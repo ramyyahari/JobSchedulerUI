@@ -12,7 +12,7 @@ var multer = require('multer');
 var request = require('request');
 var router = express.Router();
 var Promise = require('bluebird');
-
+var fs = require('fs');
 var Comment = require('./models/comments');
 var User = require('./models/users');
 var currentUser = "invalid";
@@ -35,6 +35,7 @@ app.use(require('webpack-dev-middleware')(compiler, {
   publicPath: config.output.publicPath
 }));
 
+//executing shell commands
 
 app.get('/exec*', function (req,res) {
   console.log("Execute ls"+ req.user);
@@ -49,10 +50,13 @@ app.get('/exec*', function (req,res) {
   });
 });
 
-app.get('/downloadfile*', function (req,res) {
-  res.download(path.join(__dirname+'/uploads/'+ req.query['filename']), req.query['filename']);
+//serving files to donwload
+app.get('/download*', function (req,res) {
+  console.log(__dirname+'/uploads/'+ req.query['filename']);
+  res.download(path.join(__dirname+'/uploads/'+ req.query['filename']));
 });
 
+//api for storing uploaded files
 
 app.post('/upload', upload.single('photo'), function(req, res, next){
   res.end();

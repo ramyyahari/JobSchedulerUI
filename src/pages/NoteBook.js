@@ -48,18 +48,17 @@ export default class NoteBook extends React.Component {
   }
 
   handleFileChange(value) {
-   //console.log(value);
+    console.log(value);
     this.setState({
       selectedFileValue: value
     });
-    fetch("/download?filename="+value)
-      .then((response) => {
-        return response.blob;
-      }).then((blob) => {
-        console.log(blob);
-      }).catch((e) => {
-          console.log(e);
-    });
+    window.open("/download?filename="+value);
+    // fetch("/download?filename="+value)
+    //   .then((response) => {
+    //     console.log(response);
+    //   }).catch((e) => {
+    //       console.log(e);
+    // });
   }
 
 
