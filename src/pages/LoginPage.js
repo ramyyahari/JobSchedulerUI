@@ -20,9 +20,9 @@ export default class LoginPage extends React.Component {
   }
 
   handleSubmit = () => {
-
-     fetch('/api/users', {
-      method: 'GET',
+    console.log("u"+ this.state.email+"\np:"+this.state.password);
+     fetch('/api/userlogin', {
+      method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -31,7 +31,11 @@ export default class LoginPage extends React.Component {
           email: this.state.email,
           password: this.state.password
       })
-    });
+    }).then((response) => {
+      console.log(response);
+    }).catch((e) => {
+        console.log(e);
+    }); 
      browserHistory.push('/');
   }
 

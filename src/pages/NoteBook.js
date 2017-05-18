@@ -53,12 +53,6 @@ export default class NoteBook extends React.Component {
       selectedFileValue: value
     });
     window.open("/download?filename="+value);
-    // fetch("/download?filename="+value)
-    //   .then((response) => {
-    //     console.log(response);
-    //   }).catch((e) => {
-    //       console.log(e);
-    // });
   }
 
 

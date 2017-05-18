@@ -5,3 +5,4 @@ app.js
 coverage/
 travis.log
 uploads/
+sslcert/

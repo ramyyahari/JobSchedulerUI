@@ -13,6 +13,13 @@ var request = require('request');
 var router = express.Router();
 var Promise = require('bluebird');
 var fs = require('fs');
+var express = require('express');
+var app = express();
+
+// your express configuration here
+
+
+
 var Comment = require('./models/comments');
 var User = require('./models/users');
 var currentUser = "invalid";
@@ -71,18 +78,20 @@ router.get('/', function(req, res) {
  res.json({ message: 'API Initialized!'});
 });
 
-router.route('/users')
-  .get(function(req, res) {
-    User.findOne( {email: req.email}, function(err, user) {
+router.route('/userlogin')
+  .post(function(req, res) {
+    User.findOne( {email: req.body.email}, function(err, user) {
       if (err)
         res.send(err);
-      if( user.password === req.password) {
+      if( user.password === req.body.password) {
         
-        currentUser = req.email;
+        currentUser = req.body.email;
       }
       res.send('success');    
     });
-  })
+  });
+
+router.route('/users')
   .post(function(req, res) {
     console.log(req.body.email);
     
