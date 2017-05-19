@@ -1,8 +1,8 @@
-import ReactStormpath, { Router, HomeRoute, LoginRoute, LogoutLink, AuthenticatedRoute } from 'react-stormpath';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { IndexRoute, Route, browserHistory } from 'react-router';
-import { JobSubmission, NoteBook, JobForm, Toggle, MasterPage, IndexPage, LoginPage, RegistrationPage, ProfilePage } from './pages';
+import { JobSubmission, NoteBook, JobForm, Toggle, MasterPage, IndexPage } from './pages';
+import { LoginPage, RegistrationPage, ProfilePage } from './User';
 
 
 ReactStormpath.init();

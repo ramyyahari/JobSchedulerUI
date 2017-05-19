@@ -8,6 +8,7 @@
     "dev": "nodemon --watch server.js server.js",
     "build": "webpack --optimize-minimize --define process.env.NODE_ENV='production'",
     "test": "jest",
+    "fix": "webpack --progress --profile --colors --display-error-details --display-cached",
     "coverage": "jest --coverage"
   },
   "engines": {

@@ -63,7 +63,7 @@ app.get('/download*', function (req,res) {
   res.download(path.join(__dirname+'/uploads/'+ req.query['filename']));
 });
 
-//api for storing uploaded files
+//storing uploaded files
 
 app.post('/upload', upload.single('photo'), function(req, res, next){
   res.end();
@@ -72,8 +72,10 @@ app.post('/upload', upload.single('photo'), function(req, res, next){
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/dhingralab');
 
+// mongo router 
+
 app.use('/api', router);
-//now we can set the route path & initialize the API
+
 router.get('/', function(req, res) {
  res.json({ message: 'API Initialized!'});
 });
@@ -87,6 +89,7 @@ router.route('/userlogin')
         
         currentUser = req.body.email;
       }
+      console.log(currentUser+" logged in");
       res.send('success');    
     });
   });
@@ -98,7 +101,6 @@ router.route('/users')
     User.findOne( {email: req.body.email}, function(err, user) {
       if (err)
         res.send(err);
-      console.log(user);
       if(user) {
          res.send(false);
       } else {
@@ -130,7 +132,7 @@ router.route('/comments')
     });
   })
   .post(function(req, res) {
-    console.log(req.body.content);
+    console.log("post"+req.body.content);
     var comment = new Comment();
     comment.title = req.body.title;
     comment.date = req.body.date;
